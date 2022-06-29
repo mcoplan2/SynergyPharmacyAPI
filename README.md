@@ -1,5 +1,7 @@
 # synergy_p2_api
 
+# Synergy Pharmaceutical
+
 # User Stories
 Create a Customer or Pharmacist Account
 View available medicines in the Pharmacy
