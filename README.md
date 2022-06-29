@@ -3,14 +3,23 @@
 # Synergy Pharmaceutical
 
 # User Stories
+
 Create a Customer or Pharmacist Account
+
 View available medicines in the Pharmacy
+
 Register your Medicine on the website
+
 Submit an application for refill or new prescription.
+
 Make a payment for your medicine (if accepted)
+
 View your current Medicine and renewal/refill date
+
 View a History/Log of your refills
+
 Pharmacists can add additional medicines to the Pharmacy
+
 Pharmacists can accept or reject applications
 Pharmacists can view a history/log of each customer who purchased a specific medicine
 Pharmacists can view a list of Medicines which are close to being out of stock (via some threshold)
