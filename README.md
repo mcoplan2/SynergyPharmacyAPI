@@ -66,12 +66,12 @@ Payment - Unpaid, Paid in Full
 ### Stretch goals
 
 
-Add a way for customers to make a payment plan based on insurance
+- [ ] Add a way for customers to make a payment plan based on insurance
 
-Users can include an insurance on their request so they are able to get a discount on their medicine
+- [ ] Users can include an insurance on their request so they are able to get a discount on their medicine
 
-Add multiple pharmacies for different types of medications
+- [ ] Add multiple pharmacies for different types of medications
 
-Add a way for pharmacists to purchase additional medication ( may need to add an additional table).
+- [ ] Add a way for pharmacists to purchase additional medication ( may need to add an additional table).
 
-Can add a refill button that just adds x amount to stock when Pharmacists need to refill medications.
+- [ ] Can add a refill button that just adds x amount to stock when Pharmacists need to refill medications.
