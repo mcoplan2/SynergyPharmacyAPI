@@ -2,48 +2,53 @@
 
 # Synergy Pharmaceutical
 
-# User Stories
+## User Stories
 
-Create a Customer or Pharmacist Account
+- [ ] Create a Customer or Pharmacist Account
 
-View available medicines in the Pharmacy
+- [ ] View available medicines in the Pharmacy
 
-Register your Medicine on the website
+- [ ] Register your Medicine on the website
 
-Submit an application for refill or new prescription.
+- [ ] Submit an application for refill or new prescription.
 
-Make a payment for your medicine (if accepted)
+- [ ] Make a payment for your medicine (if accepted)
 
-View your current Medicine and renewal/refill date
+- [ ] View your current Medicine and renewal/refill date
 
-View a History/Log of your refills
+- [ ] View a History/Log of your refills
 
-Pharmacists can add additional medicines to the Pharmacy
+- [ ] Pharmacists can add additional medicines to the Pharmacy
 
-Pharmacists can accept or reject applications
+- [ ] Pharmacists can accept or reject applications
 
-Pharmacists can view a history/log of each customer who purchased a specific medicine
+- [ ] Pharmacists can view a history/log of each customer who purchased a specific medicine
 
-Pharmacists can view a list of Medicines which are close to being out of stock (via some threshold)
+- [ ] Pharmacists can view a list of Medicines which are close to being out of stock (via some threshold)
+
+---
 
 
-User Model
+### User Model
 
 id | name(firstname/lastname) | username | password | role
 
-Medicine Model
+### Medicine Model
 
 id | name | amountinstock | priceperunit | type | status
 
-Request Model
+### Request Model
 
 id | userId | medId | DosageCount | DosageFreq | Type | Status
 
-Payment Model
+### Payment Model
 
 id | userId | medId | reqId | Amount | Status
 
-Enums
+---
+
+### Enums
+
 
 User Role - Customer, Pharmacist
 
@@ -55,8 +60,11 @@ Request - Open, Accepted, Denied
 
 Payment - Unpaid, Paid in Full
 
+---
 
-Stretch goals
+
+### Stretch goals
+
 
 Add a way for customers to make a payment plan based on insurance
 
