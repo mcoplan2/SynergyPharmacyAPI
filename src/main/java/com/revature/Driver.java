@@ -1,0 +1,42 @@
+package com.revature;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Driver {
+    public static void main(String[] args) {
+        SpringApplication.run(Driver.class, args);
+
+        // WE HAVE THE FOLLOWING PATHS
+
+        // /USERS
+        // GET/POST/PUT/DELETE /USERS
+        // GET /USERS/{ID}              <-- GET A USER BY THEIR ID
+        // GET /USERS/{ID}/MEDICINES    <-- GET A LIST OF MEDICINES FROM THE USER ( EMPLOYEE ONLY)
+        // POST /USERS/{ID}/MEDICINES   <-- ADDING A DIFFERENT MEDICINE TO THE PHARMACY ( EMPLOYEE ONLY )
+        // GET /USERS/{ID}/REQUESTS     <-- GETTING ALL THE REQUESTS FROM A SPECIFIC USER ( EMPLOYEE ONLY )
+
+        // /MEDICINES
+        // GET/POST/PUT/DELETE /MEDICINES
+        // GET /MEDICINES/{ID}           <-- GET A SPECIFIC MEDICINE FROM THEIR ID  ( EMPLOYEE ONLY )
+        // POST /MEDICINES/{ID}/REQUESTS <-- CREATE A NEW REQUEST FOR A SPECIFIC MEDICINE
+
+        // /REQUESTS
+        // GET/POST/PUT/DELETE /REQUESTS
+        // GET /REQUESTS/{ID}           <-- GET A SPECIFIC REQUEST VIA THEIR ID ( EMPLOYEE ONLY )
+        // POST /REQUESTS/{ID}/APPROVE/{ID}  <-- APPROVE A REQUEST VIA THEIR ID ( EMPLOYEE ONLY )
+        // POST /REQUESTS/{ID}/DENY/{ID}    <-- DENY A REQUEST VIA THEIR ID ( EMPLOYEE ONLY )
+        // POST /REQUESTS/{ID}/PAYMENT      <-- CREATE A PAYMENT FOR A REQUEST
+
+        // /PAYMENTS
+        // GET/POST/PUT/DELETE /PAYMENTS ( EMPLOYEE ONLY )
+        // GET /PAYMENTS/{ID}           <-- GET A PAYMENT VIA ITS ID ( EMPLOYEE ONLY )
+
+        // IF APPROVING/DENYING PAYMENTS NEED THESE ENDPOINTS
+        // POST /PAYMENTS/{ID}/APPROVE/{ID}  <-- APPROVE A PAYMENT VIA THEIR ID ( EMPLOYEE ONLY )
+        // POST /PAYMENTS/{ID}/DENY/{ID}    <-- DENY A PAYMENT VIA THEIR ID ( EMPLOYEE ONLY )
+
+        // TODO MAY NEED MORE ENDPOINTS/OR MAY HAVE MISSED SOME ----- THIS IS JUST AN INITIAL MOCK
+    }
+}
