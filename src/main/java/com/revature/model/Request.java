@@ -8,24 +8,27 @@ import java.util.Objects;
 public class Request implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
-    @Column
     private Integer dosageCount; // amount of pills the user will receive on their prescription.
-
-    @Column
     private Integer dosageFreq; // number of
     // times per day they need to take this pill
 
     @Enumerated
     private RequestType requestType;
 
-    // Placeholders for future data
-    // private User user;
-    // private Medicine med;
-    // private Type type; // if we decide to use Type Enums for medication
+    /*
+    @ManytoOne(cascade = CascadeType.PERSIST)
+    private User creator;
 
+    @ManytoOne(cascade = CascadeType.PERSIST)
+    private Medicine med;
+
+
+    private Type type; // if we decide to use Type Enums for medication
+
+
+     */
     public Request() {
     }
 
