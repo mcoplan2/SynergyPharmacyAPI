@@ -1,7 +1,6 @@
 package com.example.demo.model.User;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.*;
 
 @Entity(name="users")
@@ -11,21 +10,21 @@ public class User implements Serializable {
         @GeneratedValue(strategy = GenerationType.AUTO)
         private Integer UserId;
 
-        @Column(unique = true, nullable = false)
+        @Column( nullable = false)
         private String firstName;
 
         @Column(nullable = false)
         private String lastName;
 
-        @Column
+        @Column(nullable = false, unique= true)
         private String username;
 
-        @Column(unique = true)
+        @Column(nullable = false, unique = true)
         private String passWord;
 
         @Enumerated
         private Role role;
-        
+
         public Integer getUserId() {
                 return UserId;
         }
