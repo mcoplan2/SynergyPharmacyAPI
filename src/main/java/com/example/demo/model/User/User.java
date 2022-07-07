@@ -22,6 +22,6 @@ public class User implements Serializable {
         @Column(unique = true)
         private String passWord;
 
-        @Column
-        private Boolean Employee;
+        @Enumerated
+        private Role role;
     }
