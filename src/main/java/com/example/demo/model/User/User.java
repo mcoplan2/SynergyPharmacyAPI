@@ -25,19 +25,7 @@ public class User implements Serializable {
 
         @Enumerated
         private Role role;
-
-        public User() {
-        }
-
-        public User(Integer userId, String firstName, String lastName, String username, String passWord, Role role) {
-                UserId = userId;
-                this.firstName = firstName;
-                this.lastName = lastName;
-                this.username = username;
-                this.passWord = passWord;
-                this.role = role;
-        }
-
+        
         public Integer getUserId() {
                 return UserId;
         }
