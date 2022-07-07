@@ -1,10 +1,14 @@
 package com.revature.controller;
 
 import com.revature.model.Request;
+import com.revature.model.RequestType;
 import com.revature.service.RequestService;
+import org.springframework.cglib.core.Converter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/requests")
@@ -41,7 +45,11 @@ public class RequestController {
         requestService.deleteRequest(request);
     }
 
+    @GetMapping("/type/{requestType}")
+    public List<Request> getAllByRequestType(@PathVariable("requestType") String requestType) {
+        RequestType requestTypeId = RequestType.valueOf(requestType.toUpperCase(Locale.ROOT));
+        return requestService.getAllByRequestType(requestTypeId);
 
-
+    }
 
 }
