@@ -1,7 +1,11 @@
 package com.revature.service;
 
+import com.revature.model.Medicine;
 import com.revature.model.Request;
+import com.revature.model.User;
 import com.revature.model.enums.RequestType;
+import com.revature.model.enums.Status;
+import com.revature.repository.MedicineRepository;
 import com.revature.repository.RequestRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,15 +15,19 @@ import java.util.List;
 public class RequestService {
 
     private final RequestRepository requestRepository;
+    private final MedicineRepository medicineRepository;
 
-    public RequestService(RequestRepository requestRepository) {
+    public RequestService(RequestRepository requestRepository, MedicineRepository medicineRepository) {
         this.requestRepository = requestRepository;
+        this.medicineRepository = medicineRepository;
     }
 
     public Request createRequest(Request request) {
-        // CHECK HERE IF THE MEDICINE IS AVAILABLE
-        //if(MEDSERVICE GETSTATUS ISEQUAL TO INSTOCK)
-        return requestRepository.save(request);
+        if(request.getMed().getStatus() == Status.IN_STOCK) {
+            return requestRepository.save(request);
+        }
+        // else return null
+        return requestRepository.save(new Request());
     }
 
     public List<Request> getAllRequests() {
@@ -52,7 +60,9 @@ public class RequestService {
         return requestRepository.getAllByRequestType(requestType);
     }
 
-    //public List<Request> getAllByRequestByUser(User user)
+    public List<Request> getAllByRequestByUser(Integer id) {
+        return requestRepository.getAllByCreator_Id(id);
+    }
 
     //public Request approveRequest(Request request) {}
 

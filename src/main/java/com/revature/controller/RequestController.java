@@ -5,6 +5,7 @@ import com.revature.model.enums.RequestType;
 import com.revature.service.RequestService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Locale;
 
@@ -47,7 +48,11 @@ public class RequestController {
     public List<Request> getAllByRequestType(@PathVariable("requestType") String requestType) {
         RequestType requestTypeId = RequestType.valueOf(requestType.toUpperCase(Locale.ROOT));
         return requestService.getAllByRequestType(requestTypeId);
+    }
 
+    @GetMapping("/user/{id}")
+    public List<Request> getAllRequestByUser(@PathVariable("id") Integer id) {
+        return requestService.getAllByRequestByUser(id);
     }
 
 }
