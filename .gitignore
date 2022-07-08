@@ -1,5 +1,10 @@
 HELP.md
 .gradle
+.idea
+build
+gradle
+gradlew.bat
+src/main/resources
 build/
 gradle/
 gradlew
