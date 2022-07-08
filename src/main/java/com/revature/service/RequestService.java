@@ -1,11 +1,10 @@
 package com.revature.service;
 
 import com.revature.model.Request;
-import com.revature.model.RequestType;
+import com.revature.model.enums.RequestType;
 import com.revature.repository.RequestRepository;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Service

@@ -1,7 +1,7 @@
-package com.example.demo.controller;
+package com.revature.controller;
 
-import com.example.demo.model.User.User;
-import com.example.demo.service.UserService;
+import com.revature.model.User;
+import com.revature.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

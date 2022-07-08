@@ -1,5 +1,7 @@
 package com.revature.model;
 
+import com.revature.model.enums.RequestType;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
