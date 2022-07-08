@@ -1,12 +1,14 @@
+HELP.md
 .gradle
-<<<<<<< Updated upstream
 .idea
 build
 gradle
 gradlew.bat
 src/main/resources
-=======
 build/
+gradle/
+gradlew
+gradlew.bat
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
@@ -41,4 +43,3 @@ out/
 
 ### VS Code ###
 .vscode/
->>>>>>> Stashed changes
