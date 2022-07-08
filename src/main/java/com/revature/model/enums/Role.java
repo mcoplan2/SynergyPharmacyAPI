@@ -1,4 +1,4 @@
-package com.example.demo.model.User;
+package com.revature.model.enums;
 
 public enum Role {
     Employee, Customer

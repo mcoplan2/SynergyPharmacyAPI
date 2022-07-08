@@ -1,8 +1,8 @@
-package com.example.demo.service;
+package com.revature.service;
 
-import com.example.demo.exception.UserNotFoundException;
-import com.example.demo.model.User.User;
-import com.example.demo.repository.UserRepository;
+import com.revature.exception.UserNotFoundException;
+import com.revature.model.User;
+import com.revature.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,4 +1,6 @@
-package com.example.demo.model.User;
+package com.revature.model;
+
+import com.revature.model.enums.Role;
 
 import java.io.Serializable;
 import javax.persistence.*;

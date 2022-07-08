@@ -1,7 +1,7 @@
 package com.revature.repository;
 
 import com.revature.model.Request;
-import com.revature.model.RequestType;
+import com.revature.model.enums.RequestType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

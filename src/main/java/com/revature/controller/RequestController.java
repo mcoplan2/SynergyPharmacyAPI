@@ -1,10 +1,8 @@
 package com.revature.controller;
 
 import com.revature.model.Request;
-import com.revature.model.RequestType;
+import com.revature.model.enums.RequestType;
 import com.revature.service.RequestService;
-import org.springframework.cglib.core.Converter;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
