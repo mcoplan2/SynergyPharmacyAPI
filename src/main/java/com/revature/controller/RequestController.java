@@ -55,4 +55,14 @@ public class RequestController {
         return requestService.getAllByRequestByUser(id);
     }
 
+    @PostMapping("/approve/{id}")
+    public Request approveRequest(@RequestBody Request request , @PathVariable("id") Integer id) {
+        return requestService.approveRequest(request, id);
+    }
+
+    @PostMapping("/deny/{id}")
+    public Request denyRequest(@RequestBody Request request , @PathVariable("id") Integer id) {
+        return requestService.denyRequest(request, id);
+    }
+
 }

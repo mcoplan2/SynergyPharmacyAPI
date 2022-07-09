@@ -12,5 +12,5 @@ import java.util.List;
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Integer> {
     List<Request> getAllByRequestType(RequestType requestType);
-    List<Request> getAllByCreator_Id(Integer id);
+    List<Request> getAllByCreator_UserId(Integer id);
 }
