@@ -13,7 +13,7 @@ public class Request implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer requestId;
 
     @Column(nullable = false)
     private Integer dosageCount; // amount of pills the user will receive on their prescription.
@@ -21,11 +21,10 @@ public class Request implements Serializable {
     private Integer dosageFreq; // number of
     // times per day they need to take this pill
 
-    @ManyToOne
-    @Column(nullable = false)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private User creator;
 
-    @Column(nullable = false)
+    @ManyToOne(cascade = CascadeType.MERGE)
     //@ManytoOne(cascade = CascadeType.PERSIST)
     private Medicine med;
 
@@ -36,19 +35,21 @@ public class Request implements Serializable {
     public Request() {
     }
 
-    public Request(Integer id, Integer dosageCount, Integer dosageFreq, RequestType requestType) {
-        this.id = id;
+    public Request(Integer id, Integer dosageCount, Integer dosageFreq, User user, Medicine medicine ,RequestType requestType) {
+        this.requestId = id;
         this.dosageCount = dosageCount;
         this.dosageFreq = dosageFreq;
+        this.med = medicine;
+        this.creator = user;
         this.requestType = requestType;
     }
 
     public Integer getId() {
-        return id;
+        return requestId;
     }
 
     public Request setId(Integer id) {
-        this.id = id;
+        this.requestId = id;
         return this;
     }
 
@@ -102,18 +103,18 @@ public class Request implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Request request = (Request) o;
-        return Objects.equals(id, request.id) && Objects.equals(dosageCount, request.dosageCount) && Objects.equals(dosageFreq, request.dosageFreq) && Objects.equals(creator, request.creator) && Objects.equals(med, request.med) && requestType == request.requestType;
+        return Objects.equals(requestId, request.requestId) && Objects.equals(dosageCount, request.dosageCount) && Objects.equals(dosageFreq, request.dosageFreq) && Objects.equals(creator, request.creator) && Objects.equals(med, request.med) && requestType == request.requestType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dosageCount, dosageFreq, creator, med, requestType);
+        return Objects.hash(requestId, dosageCount, dosageFreq, creator, med, requestType);
     }
 
     @Override
     public String toString() {
         return "Request{" +
-                "id=" + id +
+                "id=" + requestId +
                 ", dosageCount=" + dosageCount +
                 ", dosageFreq=" + dosageFreq +
                 ", creator=" + creator +

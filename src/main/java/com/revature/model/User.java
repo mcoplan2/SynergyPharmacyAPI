@@ -10,7 +10,7 @@ public class User implements Serializable {
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        private Integer UserId;
+        private Integer userId;
 
         @Column( nullable = false)
         private String firstName;
@@ -21,18 +21,18 @@ public class User implements Serializable {
         @Column(nullable = false, unique= true)
         private String username;
 
-        @Column(nullable = false, unique = true)
+        @Column(nullable = false)
         private String passWord;
 
         @Enumerated
         private Role role;
 
         public Integer getUserId() {
-                return UserId;
+                return userId;
         }
 
-        public User setUserId(Integer userId) {
-                UserId = userId;
+        public User setUserId(Integer id) {
+                userId = id;
                 return this;
         }
 
