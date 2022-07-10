@@ -56,10 +56,6 @@ public class RequestService {
         requestRepository.delete(request);
     }
 
-    public Integer requestCount() {
-        return Math.toIntExact(requestRepository.count());
-    }
-
     public List<Request> getAllByRequestType(RequestType requestType) {
         return requestRepository.getAllByRequestType(requestType);
     }
@@ -87,7 +83,6 @@ public class RequestService {
     }
 
     public Request denyRequest(Request request, Integer id) {
-        // Do we need to check for Customer/Employee Role here if we are using JWTs?
         User approvingUser = userService.getUserById(id);
         // Do we need to check for Customer/Employee Role here if we are using JWTs?
         if(approvingUser.getRole().equals(Role.EMPLOYEE)) {

@@ -7,32 +7,17 @@ import com.revature.model.enums.RequestType;
 import com.revature.model.enums.Role;
 import com.revature.model.enums.Status;
 import com.revature.model.enums.Type;
-import com.revature.repository.RequestRepository;
 import com.revature.service.RequestService;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
 public class RequestServiceUnitTests {
 
-    @Mock
-    private RequestRepository requestRepository;
-
-    @InjectMocks
-    private RequestService requestService = Mockito.mock(RequestService.class);
+    private final RequestService requestService = Mockito.mock(RequestService.class);
 
     User user =  new User().setUserId(1).setFirstName("Test").setLastName("Test").setPassWord("Test").setRole(Role.CUSTOMER);
     User user2 =  new User().setUserId(2).setFirstName("Test2").setLastName("Test2").setPassWord("Test2").setRole(Role.EMPLOYEE);
@@ -47,10 +32,6 @@ public class RequestServiceUnitTests {
     Request request4 = new Request(2, 2, 2, user, medicine2,RequestType.DENIED);
 
 
-
-
-
-    // createRequest
     @Test
     public void whenCreateRequestCalledDoesNotThrowException() {
         Assertions.assertDoesNotThrow(() -> requestService.createRequest(request));
@@ -68,13 +49,11 @@ public class RequestServiceUnitTests {
         Assertions.assertEquals(request, testRequest);
     }
 
-    // getAllRequests
     @Test
     public void whenGetAllRequestsIsCalledDoesNotThrowException() {
         Assertions.assertDoesNotThrow(() -> requestService.getAllRequests());
     }
 
-    // getById
     @Test
     public void whenGetRequestByIdIsCalledDoesNotThrowException() {
         Assertions.assertDoesNotThrow(() -> requestService.getRequestById(0));
@@ -87,7 +66,6 @@ public class RequestServiceUnitTests {
         Assertions.assertEquals(request, testRequest);
     }
 
-    // updateRequest
     @Test
     public void whenUpdateRequestIsCalledDoesNotThrowException() {
         Assertions.assertDoesNotThrow(() -> requestService.updateRequest(request));
@@ -100,7 +78,6 @@ public class RequestServiceUnitTests {
         Assertions.assertEquals(testRequest, request2);
     }
 
-    // deleteRequest
     @Test
     public void whenDeleteRequestIsCalledDoesNotThrowException() {
         Assertions.assertDoesNotThrow(() -> requestService.deleteRequest(request));
