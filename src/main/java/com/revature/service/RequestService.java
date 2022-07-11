@@ -31,7 +31,7 @@ public class RequestService {
         if(request.getMed().getStatus() != Status.OUT_OF_STOCK) {
             return requestRepository.save(request);
         }
-        return requestRepository.save(new Request());
+        return null;
     }
 
     public List<Request> getAllRequests() {
@@ -53,7 +53,7 @@ public class RequestService {
 
     public void deleteRequest(Request request) {
         Request requestEntered = requestRepository.findById(request.getId()).orElseThrow(() -> new RuntimeException("Request could not be found"));
-        requestRepository.delete(request);
+        requestRepository.delete(requestEntered);
     }
 
     public List<Request> getAllByRequestType(RequestType requestType) {
