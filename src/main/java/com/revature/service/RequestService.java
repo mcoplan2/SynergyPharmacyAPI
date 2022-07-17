@@ -64,6 +64,10 @@ public class RequestService {
         return requestRepository.getAllByCreator_UserId(id);
     }
 
+    public List<Request> getAllRequestByUserAndType(RequestType requestType, Integer id) {
+        return  requestRepository.getAllByRequestTypeAndCreator_UserId(requestType, id);
+    }
+
     public Request approveRequest(Request request, Integer id) {
         Medicine medicine = medicineService.getMedicineById(request.getMed().getId());
         User approvingUser = userService.getUserById(id);

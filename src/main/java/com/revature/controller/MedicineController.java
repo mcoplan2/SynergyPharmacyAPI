@@ -25,6 +25,7 @@ public class MedicineController {
     }
 
     @GetMapping
+    @CrossOrigin
     public List<Medicine> getAllMedicine(){
         return medicineService.getAllMedicine();
     }

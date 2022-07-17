@@ -21,10 +21,10 @@ public class Request implements Serializable {
     private Integer dosageFreq; // number of
     // times per day they need to take this pill
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @OneToOne
     private User creator;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @OneToOne
     //@ManytoOne(cascade = CascadeType.PERSIST)
     private Medicine med;
 
