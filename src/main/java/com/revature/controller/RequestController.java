@@ -5,6 +5,7 @@ import com.revature.model.enums.RequestType;
 import com.revature.service.RequestService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Locale;
 
@@ -18,12 +19,14 @@ public class RequestController {
         this.requestService = requestService;
     }
 
-    @PostMapping // POST /requests
+    @PostMapping
+    @CrossOrigin// POST /requests
     public Request createRequest(@RequestBody Request request) {
         return requestService.createRequest(request);
     }
 
-    @GetMapping // GET /requests
+    @GetMapping
+    @CrossOrigin// GET /requests
     public List<Request> getAllRequests() {
         return requestService.getAllRequests();
     }
@@ -44,10 +47,34 @@ public class RequestController {
     }
 
     @GetMapping("/type/{requestType}")
+    @CrossOrigin
     public List<Request> getAllByRequestType(@PathVariable("requestType") String requestType) {
         RequestType requestTypeId = RequestType.valueOf(requestType.toUpperCase(Locale.ROOT));
         return requestService.getAllByRequestType(requestTypeId);
+    }
 
+    @GetMapping("/user/{id}/type/{requestType}")
+    @CrossOrigin
+    public List<Request> getAllByUserAndType(@PathVariable("requestType") String requestType, @PathVariable("id") Integer id) {
+        RequestType requestTypeId = RequestType.valueOf(requestType.toUpperCase(Locale.ROOT));
+        return requestService.getAllRequestByUserAndType(requestTypeId, id);
+    }
+
+    @GetMapping("/user/{id}")
+    public List<Request> getAllRequestByUser(@PathVariable("id") Integer id) {
+        return requestService.getAllByRequestByUser(id);
+    }
+
+    @PostMapping("/approve/{id}")
+    @CrossOrigin
+    public Request approveRequest(@RequestBody Request request , @PathVariable("id") Integer id) {
+        return requestService.approveRequest(request, id);
+    }
+
+    @PostMapping("/deny/{id}")
+    @CrossOrigin
+    public Request denyRequest(@RequestBody Request request , @PathVariable("id") Integer id) {
+        return requestService.denyRequest(request, id);
     }
 
 }

@@ -6,12 +6,12 @@ import com.revature.model.enums.Type;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
+@Entity(name = "medications")
 public class Medicine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int medId;
 
     @Column
     private String name;
@@ -29,7 +29,7 @@ public class Medicine {
     }
 
     public Medicine(int id, String name, int stock, Double price, Type type, Status status) {
-        this.id = id;
+        this.medId = id;
         this.name = name;
         this.stock = stock;
         this.price = price;
@@ -38,11 +38,11 @@ public class Medicine {
     }
 
     public int getId() {
-        return id;
+        return medId;
     }
 
     public Medicine setId(int id) {
-        this.id = id;
+        this.medId = id;
         return this;
     }
 
@@ -96,18 +96,18 @@ public class Medicine {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Medicine medicine = (Medicine) o;
-        return id == medicine.id && stock == medicine.stock && Objects.equals(name, medicine.name) && Objects.equals(price, medicine.price) && type == medicine.type && status == medicine.status;
+        return medId == medicine.medId && stock == medicine.stock && Objects.equals(name, medicine.name) && Objects.equals(price, medicine.price) && type == medicine.type && status == medicine.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, stock, price, type, status);
+        return Objects.hash(medId, name, stock, price, type, status);
     }
 
     @Override
     public String toString() {
         return "Medicine{" +
-                "id=" + id +
+                "id=" + medId +
                 ", name='" + name + '\'' +
                 ", stock=" + stock +
                 ", price=" + price +
