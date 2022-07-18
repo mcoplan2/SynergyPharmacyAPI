@@ -19,7 +19,8 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    private String SECRET_KEY = "asd";
+
+    private String SECRET_KEY = "eyJhbGciOiJIUzM4NCJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY1ODExMDk2OCwiaWF0IjoxNjU4MTEwOTY4fQ.apb-MphkYCm5vcegkVCPQsS95pIVk1bUOeWohXMY4CHvtx86aT4a2NioPGOZv7R8";
 
     private final String secretKeyEncoded = Base64.getEncoder().encodeToString(SECRET_KEY.getBytes());
 
