@@ -52,8 +52,6 @@ public class RequestServiceUnitTests {
     Request request3 = new Request(2, 25, 2, user, medicine2,RequestType.APPROVED);
     Request request4 = new Request(2, 2, 2, user, medicine2,RequestType.DENIED);
 
-
-    // TODO REDO ALL TESTS MOCKING REQUESTSERVICE -- WE DONT WANT TO MOCK THIS SERVICE
     @Test
     public void whenCreateRequestCalledDoesNotThrowException() {
         Assertions.assertDoesNotThrow(() -> requestService.createRequest(request));

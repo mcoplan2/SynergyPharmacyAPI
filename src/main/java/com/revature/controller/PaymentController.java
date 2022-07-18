@@ -31,7 +31,7 @@ public class PaymentController {
     }
 
     @GetMapping("/PayStatus/{Status}")
-    public List<Payment> getAllByPayStatus(@PathVariable("PayStatus") String payStatus){
+    public List<Payment> getAllByPayStatus(@PathVariable("Status") String payStatus){
         PayStatus payStatus1 = PayStatus.valueOf(payStatus.toUpperCase(Locale.ROOT));
         return paymentService.getAllByPayStatus(payStatus1);
     }
