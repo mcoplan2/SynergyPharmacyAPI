@@ -1,6 +1,7 @@
 package com.revature.model;
 
 import com.revature.model.enums.Role;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
 import javax.persistence.*;

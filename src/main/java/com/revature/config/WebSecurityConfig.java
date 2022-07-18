@@ -8,9 +8,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,33 +24,32 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
     private final JwtFilter jwtFilter;
 
     @Lazy
-    public WebSecurityConfig(UserService userService,JwtFilter jwtFilter) {
+    public WebSecurityConfig(UserService userService, JwtFilter jwtFilter) {
         this.userService = userService;
         this.jwtFilter = jwtFilter;
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService);
     }
 
-
-    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    @Override
+    protected void configure(HttpSecurity http) throws Exception{
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/users", "/authenticate").permitAll()
-                .antMatchers(HttpMethod.GET, "/requests").permitAll()
+                .antMatchers(HttpMethod.GET, "/flashcards").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
     }
 
     @Bean
@@ -56,6 +57,12 @@ public class WebSecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
         return source;
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception{
+        return super.authenticationManagerBean();
     }
 
     @Bean

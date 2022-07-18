@@ -19,12 +19,9 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    @Value("${jwt.secret-key}")
-    private String SECRET_KEY;
+    private String SECRET_KEY = "asd";
 
     private final String secretKeyEncoded = Base64.getEncoder().encodeToString(SECRET_KEY.getBytes());
-    @Value("${jwt.expiration-days}")
-    private Integer expirationDays;
 
     Key key = new SecretKeySpec(secretKeyEncoded.getBytes(), SignatureAlgorithm.HS256.getJcaName());
 
@@ -55,9 +52,7 @@ public class JwtUtil {
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * expirationDays))
-                .signWith(key).compact();
+        return Jwts.builder().setClaims(claims).setSubject(subject).signWith(key).compact();
     }
 
     public Boolean validateToken(String token, UserDetails userDetails){

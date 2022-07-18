@@ -1,6 +1,7 @@
 package com.revature.controller;
 
 import com.revature.model.User;
+import com.revature.security.RegistrationRequest;
 import com.revature.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,8 @@ public class UserController {
         return userService.getAllUsers();
     }
     @PostMapping
-    public User createUser(@RequestBody User user){
-        return userService.createUser(user);
+    public User createUser(@RequestBody RegistrationRequest registrationRequest){
+        return userService.createUser(registrationRequest);
     }
     @GetMapping("/{id}")
     public User getUserById(@PathVariable int id){

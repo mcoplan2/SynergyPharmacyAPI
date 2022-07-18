@@ -18,7 +18,7 @@ public class Payment implements Serializable {
 
     @Enumerated
     @Column(nullable = false)
-    private PayStatus status;
+    private PayStatus payStatus;
 
     public Integer getId() {
         return id;
@@ -39,11 +39,11 @@ public class Payment implements Serializable {
     }
 
     public PayStatus getStatus() {
-        return status;
+        return payStatus;
     }
 
     public Payment setStatus(PayStatus status) {
-        this.status = status;
+        this.payStatus = status;
         return this;
     }
 }
