@@ -47,6 +47,8 @@ public class UserService implements UserDetailsService {
         //business checks
 
         User newUser = new User()
+                .setFirstName(registrationRequest.getFirstName())
+                .setLastName(registrationRequest.getLastName())
                 .setUsername(registrationRequest.getUsername())
                 .setPassWord(passwordEncoder.encode(registrationRequest.getPassword()))
                 .setRole(Role.CUSTOMER);
@@ -125,8 +127,11 @@ public class UserService implements UserDetailsService {
         return new AuthenticationResponse(jwtUtil.generateToken((User) loadUserByUsername(request.getUsername())), request.getUsername());
     }
 
+    public User getUserByUsername(String username){
+        return userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException(User.class, "username", username));
+    }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        return getUserByUsername(username);
     }
 }
