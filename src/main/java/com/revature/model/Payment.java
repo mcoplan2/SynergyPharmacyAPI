@@ -21,6 +21,9 @@ public class Payment implements Serializable {
     @Column(nullable = false)
     private PayStatus payStatus;
 
+    @OneToOne
+    private Request reqId;
+
     public Integer getPaymentId() {
         return paymentId;
     }
@@ -48,17 +51,13 @@ public class Payment implements Serializable {
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Payment payment = (Payment) o;
-        return Objects.equals(paymentId, payment.paymentId) && Objects.equals(amount, payment.amount) && payStatus == payment.payStatus;
+    public Request getReqId() {
+        return reqId;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(paymentId, amount, payStatus);
+    public Payment setReqId(Request reqId) {
+        this.reqId = reqId;
+        return this;
     }
 
     @Override
@@ -67,6 +66,22 @@ public class Payment implements Serializable {
                 "paymentId=" + paymentId +
                 ", amount=" + amount +
                 ", payStatus=" + payStatus +
+                ", reqId=" + reqId +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Payment payment = (Payment) o;
+        return Objects.equals(paymentId, payment.paymentId) && Objects.equals(amount, payment.amount) && payStatus == payment.payStatus && Objects.equals(reqId, payment.reqId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(paymentId, amount, payStatus, reqId);
+    }
 }
+
+
