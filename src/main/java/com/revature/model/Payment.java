@@ -24,6 +24,15 @@ public class Payment implements Serializable {
     @OneToOne
     private Request reqId;
 
+    public Payment(){}
+
+    public Payment(Integer paymentId, Float amount, PayStatus payStatus, Request reqId) {
+        this.paymentId = paymentId;
+        this.amount = amount;
+        this.payStatus = payStatus;
+        this.reqId = reqId;
+    }
+
     public Integer getPaymentId() {
         return paymentId;
     }
