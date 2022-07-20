@@ -1,8 +1,10 @@
 package com.revature.controller;
 
 import com.revature.model.Payment;
+import com.revature.model.User;
 import com.revature.model.enums.PayStatus;
 import com.revature.service.PaymentService;
+import com.revature.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,9 +32,14 @@ public class PaymentController {
         return paymentService.getPaymentById(id);
     }
 
-    @GetMapping("/PayStatus/{Status}")
+    @GetMapping("/paystatus/{Status}")
     public List<Payment> getAllByPayStatus(@PathVariable("Status") String payStatus){
         PayStatus payStatus1 = PayStatus.valueOf(payStatus.toUpperCase(Locale.ROOT));
         return paymentService.getAllByPayStatus(payStatus1);
+    }
+
+    @GetMapping("/userid/{Id}")
+    public List<Payment> getAllByUserId(@PathVariable("Id") String id){
+        return paymentService.getAllByUserId(Integer.parseInt(id));
     }
 }

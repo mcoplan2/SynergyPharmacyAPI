@@ -24,13 +24,21 @@ public class Payment implements Serializable {
     @OneToOne
     private Request reqId;
 
+    @OneToOne
+    private User userId;
+
+    @OneToOne
+    private Medicine medicineId;
+
     public Payment(){}
 
-    public Payment(Integer paymentId, Float amount, PayStatus payStatus, Request reqId) {
+    public Payment(Integer paymentId, Float amount, PayStatus payStatus, Request reqId, User userId, Medicine medicineId) {
         this.paymentId = paymentId;
         this.amount = amount;
         this.payStatus = payStatus;
         this.reqId = reqId;
+        this.userId = userId;
+        this.medicineId = medicineId;
     }
 
     public Integer getPaymentId() {
@@ -69,14 +77,22 @@ public class Payment implements Serializable {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "Payment{" +
-                "paymentId=" + paymentId +
-                ", amount=" + amount +
-                ", payStatus=" + payStatus +
-                ", reqId=" + reqId +
-                '}';
+    public User getUserId() {
+        return userId;
+    }
+
+    public Payment setUserId(User userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public Medicine getMedicineId() {
+        return medicineId;
+    }
+
+    public Payment setMedicineId(Medicine medicineId) {
+        this.medicineId = medicineId;
+        return this;
     }
 
     @Override
@@ -84,12 +100,24 @@ public class Payment implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return Objects.equals(paymentId, payment.paymentId) && Objects.equals(amount, payment.amount) && payStatus == payment.payStatus && Objects.equals(reqId, payment.reqId);
+        return Objects.equals(paymentId, payment.paymentId) && Objects.equals(amount, payment.amount) && payStatus == payment.payStatus && Objects.equals(reqId, payment.reqId) && Objects.equals(userId, payment.userId) && Objects.equals(medicineId, payment.medicineId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(paymentId, amount, payStatus, reqId);
+        return Objects.hash(paymentId, amount, payStatus, reqId, userId, medicineId);
+    }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "paymentId=" + paymentId +
+                ", amount=" + amount +
+                ", payStatus=" + payStatus +
+                ", reqId=" + reqId +
+                ", userId=" + userId +
+                ", medicineId=" + medicineId +
+                '}';
     }
 }
 
