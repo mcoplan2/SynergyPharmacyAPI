@@ -47,4 +47,10 @@ public class PaymentController {
     public List<Payment> getAllByUserId(@PathVariable("Id") String id){
         return paymentService.getAllByUserId(Integer.parseInt(id));
     }
+
+    @GetMapping("/userid/{Id}/paystatus/{status}")
+    @CrossOrigin
+    public List<Payment> getAllByUserId(@PathVariable("Id") String id, @PathVariable("status") String status){
+        return paymentService.getAllByUserId(Integer.parseInt(id), status);
+    }
 }

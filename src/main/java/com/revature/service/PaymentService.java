@@ -40,4 +40,14 @@ public class PaymentService {
         User userId = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         return paymentRepository.getAllByUserId(userId);
     }
+
+    public List<Payment> getAllByUserId(Integer id, String status){
+        List<Payment> list = getAllByUserId(id);
+        PayStatus payStatus = PayStatus.valueOf(status);
+        for(Payment p: list){
+            if(p.getPayStatus() != payStatus)
+                list.remove(p);
+        }
+        return list;
+    }
 }
