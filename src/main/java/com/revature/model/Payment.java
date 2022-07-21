@@ -1,9 +1,12 @@
 package com.revature.model;
 
 import com.revature.model.enums.PayStatus;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.Objects;
 
 @Entity(name = "payments")
@@ -28,6 +31,12 @@ public class Payment implements Serializable {
 
     @OneToOne
     private Medicine medicineId;
+
+    @CreationTimestamp
+    private Date creationDate;
+
+    @UpdateTimestamp
+    private Date updateDate;
 
     public Payment(){}
 
@@ -94,17 +103,35 @@ public class Payment implements Serializable {
         return this;
     }
 
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public Payment setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+        return this;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public Payment setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return Objects.equals(paymentId, payment.paymentId) && Objects.equals(amount, payment.amount) && payStatus == payment.payStatus && Objects.equals(reqId, payment.reqId) && Objects.equals(userId, payment.userId) && Objects.equals(medicineId, payment.medicineId);
+        return Objects.equals(paymentId, payment.paymentId) && Objects.equals(amount, payment.amount) && payStatus == payment.payStatus && Objects.equals(reqId, payment.reqId) && Objects.equals(userId, payment.userId) && Objects.equals(medicineId, payment.medicineId) && Objects.equals(creationDate, payment.creationDate) && Objects.equals(updateDate, payment.updateDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(paymentId, amount, payStatus, reqId, userId, medicineId);
+        return Objects.hash(paymentId, amount, payStatus, reqId, userId, medicineId, creationDate, updateDate);
     }
 
     @Override
@@ -116,6 +143,8 @@ public class Payment implements Serializable {
                 ", reqId=" + reqId +
                 ", userId=" + userId +
                 ", medicineId=" + medicineId +
+                ", creationDate=" + creationDate +
+                ", updateDate=" + updateDate +
                 '}';
     }
 }
