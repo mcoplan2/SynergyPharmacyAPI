@@ -55,6 +55,10 @@ public class PaymentService {
         return rList;
     }
 
+    public void deletePayment(Payment payment){
+        paymentRepository.delete(payment);
+    }
+
     public Payment updatePayment(Payment payment) {
         Payment paymentToEdit = paymentRepository.findById(payment.getPaymentId()).orElseThrow(() -> new RuntimeException("Payment could not be found"));
         paymentToEdit.setAmount(payment.getAmount());

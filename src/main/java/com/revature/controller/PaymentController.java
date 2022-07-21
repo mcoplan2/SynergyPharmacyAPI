@@ -22,6 +22,12 @@ public class PaymentController {
         return paymentService.createPayment(payment);
     }
 
+    @DeleteMapping
+    @CrossOrigin
+    public void deletePayment(@RequestBody Payment payment){
+        paymentService.deletePayment(payment);
+    }
+
     @GetMapping
     @CrossOrigin
     public List<Payment> getAllPayments(){
