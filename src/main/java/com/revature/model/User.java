@@ -17,10 +17,10 @@ public class User implements UserDetails {
         @GeneratedValue(strategy = GenerationType.AUTO)
         private Integer userId;
 
-        @Column( nullable = false)
+        @Column
         private String firstName;
 
-        @Column(nullable = false)
+        @Column
         private String lastName;
 
         @Column(nullable = false, unique= true)

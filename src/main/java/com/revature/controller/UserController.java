@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
     private final UserService userService;
@@ -28,6 +29,12 @@ public class UserController {
     @GetMapping("/{id}")
     public User getUserById(@PathVariable int id){
         return userService.getUserById(id);
+    }
+
+    @GetMapping("/username/{username}")
+    @CrossOrigin
+    public User getUserByUsername(@PathVariable String username){
+        return userService.getUserByUsername(username);
     }
 
 }
