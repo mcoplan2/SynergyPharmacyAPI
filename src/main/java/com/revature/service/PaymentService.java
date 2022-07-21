@@ -8,6 +8,7 @@ import com.revature.repository.PaymentRepository;
 import com.revature.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,11 +44,13 @@ public class PaymentService {
 
     public List<Payment> getAllByUserId(Integer id, String status){
         List<Payment> list = getAllByUserId(id);
+        List<Payment> rList = new ArrayList<>();
         PayStatus payStatus = PayStatus.valueOf(status);
+        System.err.println(list);
         for(Payment p: list){
-            if(p.getPayStatus() != payStatus)
-                list.remove(p);
+            if(p.getPayStatus() == payStatus)
+                rList.add(p);
         }
-        return list;
+        return rList;
     }
 }
