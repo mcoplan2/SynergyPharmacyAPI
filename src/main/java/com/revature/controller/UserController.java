@@ -1,6 +1,7 @@
 package com.revature.controller;
 
 import com.revature.model.User;
+import com.revature.security.RegistrationRequest;
 import com.revature.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
     private final UserService userService;
@@ -21,12 +23,18 @@ public class UserController {
         return userService.getAllUsers();
     }
     @PostMapping
-    public User createUser(@RequestBody User user){
-        return userService.createUser(user);
+    public User createUser(@RequestBody RegistrationRequest registrationRequest){
+        return userService.createUser(registrationRequest);
     }
     @GetMapping("/{id}")
     public User getUserById(@PathVariable int id){
         return userService.getUserById(id);
+    }
+
+    @GetMapping("/username/{username}")
+    @CrossOrigin
+    public User getUserByUsername(@PathVariable String username){
+        return userService.getUserByUsername(username);
     }
 
 }
