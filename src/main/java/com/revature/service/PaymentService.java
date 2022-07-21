@@ -2,12 +2,14 @@ package com.revature.service;
 
 import com.revature.exception.UserNotFoundException;
 import com.revature.model.Payment;
+import com.revature.model.Request;
 import com.revature.model.User;
 import com.revature.model.enums.PayStatus;
 import com.revature.repository.PaymentRepository;
 import com.revature.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,5 +41,24 @@ public class PaymentService {
     public List<Payment> getAllByUserId(Integer id){
         User userId = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         return paymentRepository.getAllByUserId(userId);
+    }
+
+    public List<Payment> getAllByUserId(Integer id, String status){
+        List<Payment> list = getAllByUserId(id);
+        List<Payment> rList = new ArrayList<>();
+        PayStatus payStatus = PayStatus.valueOf(status);
+        System.err.println(list);
+        for(Payment p: list){
+            if(p.getPayStatus() == payStatus)
+                rList.add(p);
+        }
+        return rList;
+    }
+
+    public Payment updatePayment(Payment payment) {
+        Payment paymentToEdit = paymentRepository.findById(payment.getPaymentId()).orElseThrow(() -> new RuntimeException("Payment could not be found"));
+        paymentToEdit.setAmount(payment.getAmount());
+        paymentToEdit.setPayStatus(payment.getPayStatus());
+        return paymentRepository.save(paymentToEdit);
     }
 }

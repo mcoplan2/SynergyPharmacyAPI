@@ -1,10 +1,8 @@
 package com.revature.controller;
 
 import com.revature.model.Payment;
-import com.revature.model.User;
 import com.revature.model.enums.PayStatus;
 import com.revature.service.PaymentService;
-import com.revature.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +28,10 @@ public class PaymentController {
         return paymentService.getAllPayment();
     }
 
+    @PostMapping("/update")
+    @CrossOrigin
+    public Payment updatePayment(@RequestBody Payment payment){return paymentService.updatePayment(payment);}
+
     @GetMapping("/{id}")
     @CrossOrigin
     public Payment getPaymentById(@PathVariable int id){
@@ -47,5 +49,11 @@ public class PaymentController {
     @CrossOrigin
     public List<Payment> getAllByUserId(@PathVariable("Id") String id){
         return paymentService.getAllByUserId(Integer.parseInt(id));
+    }
+
+    @GetMapping("/userid/{Id}/paystatus/{status}")
+    public List<Payment> getAllByUserId(@PathVariable("Id") String id, @PathVariable("status") String status){
+        //System.err.println("with Param = " + id + " " + status);
+        return paymentService.getAllByUserId(Integer.parseInt(id), status);
     }
 }
