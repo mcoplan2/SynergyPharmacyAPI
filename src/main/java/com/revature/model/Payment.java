@@ -3,7 +3,6 @@ package com.revature.model;
 import com.revature.model.enums.PayStatus;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 import java.util.Objects;
 

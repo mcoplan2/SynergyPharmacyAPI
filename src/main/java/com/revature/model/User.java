@@ -1,21 +1,26 @@
 package com.revature.model;
 
 import com.revature.model.enums.Role;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 import javax.persistence.*;
 
 @Entity(name="users")
-public class User implements Serializable {
+public class User implements UserDetails {
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         private Integer userId;
 
-        @Column( nullable = false)
+        @Column
         private String firstName;
 
-        @Column(nullable = false)
+        @Column
         private String lastName;
 
         @Column(nullable = false, unique= true)
@@ -26,6 +31,9 @@ public class User implements Serializable {
 
         @Enumerated
         private Role role;
+
+        @ColumnDefault("true")
+        private boolean isActive = true;
 
         public Integer getUserId() {
                 return userId;
@@ -54,8 +62,38 @@ public class User implements Serializable {
                 return this;
         }
 
+        @Override
+        public Collection<? extends GrantedAuthority> getAuthorities() {
+                return Collections.singleton(role);
+        }
+
+        @Override
+        public String getPassword() {
+                return this.passWord;
+        }
+
         public String getUsername() {
-                return username;
+                return this.username;
+        }
+
+        @Override
+        public boolean isAccountNonExpired() {
+                return isActive;
+        }
+
+        @Override
+        public boolean isAccountNonLocked() {
+                return isActive;
+        }
+
+        @Override
+        public boolean isCredentialsNonExpired() {
+                return isActive;
+        }
+
+        @Override
+        public boolean isEnabled() {
+                return isActive;
         }
 
         public User setUsername(String username) {
