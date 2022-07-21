@@ -50,8 +50,8 @@ public class PaymentController {
     }
 
     @GetMapping("/userid/{Id}/paystatus/{status}")
-    @CrossOrigin
     public List<Payment> getAllByUserId(@PathVariable("Id") String id, @PathVariable("status") String status){
+        System.err.println("with Param = " + id + " " + status);
         return paymentService.getAllByUserId(Integer.parseInt(id), status);
     }
 }
