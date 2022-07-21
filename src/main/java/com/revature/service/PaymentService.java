@@ -2,6 +2,7 @@ package com.revature.service;
 
 import com.revature.exception.UserNotFoundException;
 import com.revature.model.Payment;
+import com.revature.model.Request;
 import com.revature.model.User;
 import com.revature.model.enums.PayStatus;
 import com.revature.repository.PaymentRepository;
@@ -52,5 +53,12 @@ public class PaymentService {
                 rList.add(p);
         }
         return rList;
+    }
+
+    public Payment updatePayment(Payment payment) {
+        Payment paymentToEdit = paymentRepository.findById(payment.getPaymentId()).orElseThrow(() -> new RuntimeException("Payment could not be found"));
+        paymentToEdit.setAmount(payment.getAmount());
+        paymentToEdit.setPayStatus(payment.getPayStatus());
+        return paymentRepository.save(paymentToEdit);
     }
 }
