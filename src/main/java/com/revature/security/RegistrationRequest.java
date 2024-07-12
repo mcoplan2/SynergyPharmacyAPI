@@ -1,15 +1,16 @@
 package com.revature.security;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class RegistrationRequest {
-    private String firstName;
-    private String lastName;
     private String username;
     private String password;
+    private String firstName;
+    private String lastName;
 }

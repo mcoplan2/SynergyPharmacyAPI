@@ -124,7 +124,8 @@ public class UserService implements UserDetailsService {
             throw new InvalidCredentialsException();
         }
 
-        return new AuthenticationResponse(jwtUtil.generateToken((User) loadUserByUsername(request.getUsername())), request.getUsername());
+        User newuser = getUserByUsername(request.getUsername());
+        return new AuthenticationResponse(jwtUtil.generateToken((User) loadUserByUsername(request.getUsername())), request.getUsername(), newuser.getFirstName(), newuser.getLastName(), newuser.getRole());
     }
 
     public User getUserByUsername(String username){
