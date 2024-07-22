@@ -1,12 +1,15 @@
 package com.revature.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.revature.model.enums.PayStatus;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity(name = "payments")
@@ -32,11 +35,17 @@ public class Payment implements Serializable {
     @OneToOne
     private Medicine medicineId;
 
+    @DateTimeFormat(pattern = "MM-dd-yyyy HH:mm:ss")
     @CreationTimestamp
-    private Date creationDate;
+    @Column(name = "creation_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy HH:mm:ss")
+    private LocalDateTime creationDate;
 
+    @DateTimeFormat(pattern = "MM-dd-yyyy HH:mm:ss")
     @UpdateTimestamp
-    private Date updateDate;
+    @Column(name = "update_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy HH:mm:ss")
+    private LocalDateTime updateDate;
 
     public Payment(){}
 
@@ -103,20 +112,20 @@ public class Payment implements Serializable {
         return this;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public Payment setCreationDate(Date creationDate) {
+    public Payment setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
         return this;
     }
 
-    public Date getUpdateDate() {
+    public LocalDateTime getUpdateDate() {
         return updateDate;
     }
 
-    public Payment setUpdateDate(Date updateDate) {
+    public Payment setUpdateDate(LocalDateTime updateDate) {
         this.updateDate = updateDate;
         return this;
     }
