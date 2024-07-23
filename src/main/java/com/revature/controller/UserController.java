@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class UserController {
 
     private final UserService userService;
@@ -35,6 +35,12 @@ public class UserController {
     @CrossOrigin
     public User getUserByUsername(@PathVariable String username){
         return userService.getUserByUsername(username);
+    }
+
+    @PatchMapping("/{userId}")
+    @CrossOrigin
+    public User updateUser(@PathVariable Integer userId, @RequestBody User user) {
+        return userService.updateUser(user, userId);
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.Locale;
 
 @RestController
 @RequestMapping("/payments")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class PaymentController {
     private final PaymentService paymentService;
 

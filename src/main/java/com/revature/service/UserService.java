@@ -89,9 +89,9 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public User updateUser(User user){
+    public User updateUser(User user, Integer userId){
         // check if the user exists
-        User dbUser = findUser(user);
+        User dbUser = getUserById(userId);
         Boolean fieldUpdated = false;
         if(user.getUsername() != null){
             dbUser.setUsername(user.getUsername());

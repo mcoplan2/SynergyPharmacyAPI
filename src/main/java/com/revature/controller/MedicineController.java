@@ -11,7 +11,7 @@ import java.util.Locale;
 
 @RestController
 @RequestMapping("/medicines")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class MedicineController {
 
     private final MedicineService medicineService;

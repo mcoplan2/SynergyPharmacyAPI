@@ -35,6 +35,24 @@ public class User implements UserDetails {
         @ColumnDefault("true")
         private boolean isActive = true;
 
+        public User(String username, String firstName, String lastName, String passWord){
+                this.username = username;
+                this.firstName = firstName;
+                this.lastName = lastName;
+                this.passWord = passWord;
+        }
+
+        public User(String username, String firstName, String lastName, String passWord, Role role){
+                this.username = username;
+                this.firstName = firstName;
+                this.lastName = lastName;
+                this.passWord = passWord;
+                this.role = role;
+        }
+
+        public User(){
+        }
+
         public Integer getUserId() {
                 return userId;
         }
