@@ -5,6 +5,7 @@ import com.revature.model.enums.Type;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -28,6 +29,9 @@ public class Request implements Serializable {
     //@ManytoOne(cascade = CascadeType.PERSIST)
     private Medicine med;
 
+
+    private Integer paymentId;
+
     @Enumerated
     private RequestType requestType = RequestType.OPEN;
 
@@ -42,6 +46,16 @@ public class Request implements Serializable {
         this.med = medicine;
         this.creator = user;
         this.requestType = requestType;
+    }
+
+    public Request(Integer id, Integer dosageCount, Integer dosageFreq, User user, Medicine medicine ,RequestType requestType, Integer paymentId) {
+        this.requestId = id;
+        this.dosageCount = dosageCount;
+        this.dosageFreq = dosageFreq;
+        this.med = medicine;
+        this.creator = user;
+        this.requestType = requestType;
+        this.paymentId = paymentId;
     }
 
     public Integer getId() {
@@ -97,6 +111,14 @@ public class Request implements Serializable {
         this.med = med;
         return this;
     }
+
+    public Integer getPaymentId() {return paymentId; }
+
+    public Request setPayment(Integer paymentId) {
+        this.paymentId = paymentId;
+        return this;
+    }
+
 
     @Override
     public boolean equals(Object o) {

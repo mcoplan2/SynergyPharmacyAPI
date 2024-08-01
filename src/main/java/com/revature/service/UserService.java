@@ -66,29 +66,6 @@ public class UserService implements UserDetailsService {
 
     }
 
-    private User findUser(User user){
-        Integer userId = user.getUserId();
-        String username = user.getUsername();
-
-        User foundUser = null;
-
-        if(userId != null)
-            foundUser = userRepository.findById(userId).orElse(null);
-
-        if(foundUser == null && username != null)
-            foundUser = userRepository.findByUsername(username).orElse(null);
-
-        if(foundUser == null){
-            if(user.getUserId() != null)
-                throw new ResourceNotFoundException(User.class, "userId", user.getUserId());
-            else
-                throw new ResourceNotFoundException(User.class, "username", user.getUsername());
-        }
-
-        return foundUser;
-
-    }
-
     public User updateUser(User user, Integer userId){
         // check if the user exists
         User dbUser = getUserById(userId);

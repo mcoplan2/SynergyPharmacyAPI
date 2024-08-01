@@ -10,6 +10,7 @@ import com.revature.model.enums.Type;
 import com.revature.repository.MedicineRepository;
 import com.revature.repository.RequestRepository;
 import com.revature.service.MedicineService;
+import com.revature.service.PaymentService;
 import com.revature.service.RequestService;
 import com.revature.service.UserService;
 import org.aspectj.lang.annotation.Before;
@@ -29,6 +30,7 @@ public class RequestServiceUnitTests {
     private MedicineService medicineService;
     private MedicineRepository medicineRepository;
     private UserService userService;
+    private PaymentService paymentService;
 
     @BeforeEach
     public void setup() {
@@ -36,7 +38,8 @@ public class RequestServiceUnitTests {
         medicineRepository = Mockito.mock(MedicineRepository.class);
         medicineService = Mockito.mock(MedicineService.class);
         userService = Mockito.mock(UserService.class);
-        requestService = new RequestService(requestRepository, medicineRepository, medicineService, userService);
+        paymentService = Mockito.mock(PaymentService.class);
+        requestService = new RequestService(requestRepository, medicineRepository, medicineService, userService, paymentService);
     }
 
     User user =  new User().setUserId(1).setFirstName("Test").setLastName("Test").setPassWord("Test").setRole(Role.CUSTOMER);
