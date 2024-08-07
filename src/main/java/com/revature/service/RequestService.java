@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RequestService {
@@ -37,7 +38,20 @@ public class RequestService {
 
     public Request createRequest(Request request)  {
         Medicine medicine = medicineService.getMedicineById(request.getMed().getId());
+
         if(medicine.getStatus() != Status.OUT_OF_STOCK) {
+            Optional<Request> existingRequest = requestRepository.findByCreator_UserIdAndMed_MedIdAndDosageCountAndDosageFreqAndRequestType(
+                    request.getCreator().getUserId(),
+                    request.getMed().getId(),
+                    request.getDosageCount(),
+                    request.getDosageFreq(),
+                    RequestType.APPROVED
+            );
+            if(existingRequest.isPresent()) {
+                Request requestToUpdate = existingRequest.get();
+                requestToUpdate.setRequestType(RequestType.OPEN);
+                return updateRequest(requestToUpdate);
+            }
             return requestRepository.save(request);
         }
         throw new RuntimeException(medicine.getName()+" is Out of Stock");
@@ -92,6 +106,8 @@ public class RequestService {
                 newPayment.setUserId(request.getCreator());
                 newPayment.setReqId(request);
                 Payment createdPayment = paymentService.createPayment(newPayment);
+                System.out.println("TEST: \n");
+                System.out.println(createdPayment);
 
                 // Update Stock
                 int newStock = medicine.getStock() - request.getDosageCount();

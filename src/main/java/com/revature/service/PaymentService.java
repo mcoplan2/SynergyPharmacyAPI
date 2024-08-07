@@ -2,7 +2,6 @@ package com.revature.service;
 
 import com.revature.exception.UserNotFoundException;
 import com.revature.model.Payment;
-import com.revature.model.Request;
 import com.revature.model.User;
 import com.revature.model.enums.PayStatus;
 import com.revature.repository.PaymentRepository;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PaymentService {
@@ -23,6 +23,20 @@ public class PaymentService {
     }
 
     public Payment  createPayment(Payment payment){
+        Optional<Payment> existingPayment = paymentRepository.findByUserId_UserIdAndMedicineId_MedIdAndReqId_DosageCountAndReqId_DosageFreq(
+                payment.getUserId().getUserId(),
+                payment.getMedicineId().getId(),
+                payment.getReqId().getDosageCount(),
+                payment.getReqId().getDosageFreq()
+
+        );
+        System.out.println("TESTING \n");
+        System.out.println(existingPayment);
+        if(existingPayment.isPresent()) {
+            Payment paymentToChange = existingPayment.get();
+            paymentToChange.setPayStatus(PayStatus.UNPAID);
+            return updatePayment(paymentToChange);
+        }
         return paymentRepository.save(payment);
     }
 
@@ -61,8 +75,14 @@ public class PaymentService {
 
     public Payment updatePayment(Payment payment) {
         Payment paymentToEdit = paymentRepository.findById(payment.getPaymentId()).orElseThrow(() -> new RuntimeException("Payment could not be found"));
+        System.out.println("11111111111  \n");
+        System.out.println("11111111111 \n");
+        System.out.println("11111111111 \n");
+        System.out.println("111111111111 \n");
+        System.out.println(paymentToEdit);
         paymentToEdit.setAmount(payment.getAmount());
         paymentToEdit.setPayStatus(payment.getPayStatus());
+        System.out.println(paymentToEdit);
         return paymentRepository.save(paymentToEdit);
     }
 }
