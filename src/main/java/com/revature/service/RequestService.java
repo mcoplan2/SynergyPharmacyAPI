@@ -88,8 +88,26 @@ public class RequestService {
     }
 
     public List<Request> getAllRequestByUserAndType(RequestType requestType, Integer id) {
-        return  requestRepository.getAllByRequestTypeAndCreator_UserId(requestType, id);
+        return requestRepository.getAllByRequestTypeAndCreator_UserId(requestType, id);
     }
+
+    public List<Request> getAllByUserAndTypeAndMedicationFirstLetter(Integer id, RequestType requestType, String letter) {
+        return requestRepository.findByCreator_UserIdAndRequestTypeAndMed_NameStartingWith(id, requestType, letter);
+    }
+
+    public List<Request> getAllByUserAndTypeAndMedicationContaining(Integer id, RequestType requestType, String query) {
+        return requestRepository.findByCreator_UserIdAndRequestTypeAndMed_NameContainingIgnoreCase(id, requestType, query);
+    }
+
+    public List<Request> getAllByMedicationNameContaining(String query) {
+        return requestRepository.findByMed_NameContainingIgnoreCase(query);
+    }
+
+    public List<Request> getAllByMedicationNameStartingWith(String letter) {
+        return  requestRepository.findByMed_NameStartingWith(letter);
+    }
+
+
     @Transactional
     public Request approveRequest(Request request, Integer id) {
         Medicine medicine = medicineService.getMedicineById(request.getMed().getId());

@@ -43,6 +43,14 @@ public class MedicineService {
         medicineRepository.delete(medicineIdEntered);
     }
 
+    public List<Medicine> getMedicationByLetter(String letter) {
+        return medicineRepository.findByNameStartingWith(letter);
+    }
+
+    public List<Medicine> getMedicationContaining(String query) {
+        return medicineRepository.findByNameContainingIgnoreCase(query);
+    }
+
     public List<Type> getAllByType(Type type){
         return medicineRepository.getAllByType(type);
     }

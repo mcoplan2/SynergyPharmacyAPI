@@ -49,6 +49,23 @@ public class MedicineController {
 
     }
 
+    @GetMapping("/filter")
+    public List<Medicine> getAllMedicationsByFirstLetter(@RequestParam(required = false) String letter, String query) {
+        if (letter != null && !letter.isEmpty()) {
+            if (query != null && !query.isEmpty()) {
+                return medicineService.getMedicationContaining(query);
+            } else {
+                return medicineService.getMedicationByLetter(letter.toUpperCase());
+            }
+        } else {
+            if(query != null && !query.isEmpty()) {
+                return medicineService.getMedicationContaining(query);
+            } else {
+            return medicineService.getAllMedicine();
+        }
+    }
+        }
+
     @PutMapping
     public Medicine updateMedicine(@RequestBody Medicine medicine){
         return medicineService.updateMedicine(medicine);

@@ -13,4 +13,6 @@ import java.util.List;
 public interface MedicineRepository extends JpaRepository<Medicine, Integer> {
     List<Type> getAllByType(Type type);
     List<Status> getAllByStatus(Status status);
+    List<Medicine> findByNameStartingWith(String letter);
+    List<Medicine> findByNameContainingIgnoreCase(String query);
 }
