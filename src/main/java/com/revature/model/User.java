@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import javax.persistence.*;
 
 @Entity(name="users")
@@ -27,7 +28,7 @@ public class User implements UserDetails {
         private String username;
 
         @Column(nullable = false)
-        private String passWord;
+        private String password;
 
         @Enumerated
         private Role role;
@@ -35,18 +36,18 @@ public class User implements UserDetails {
         @ColumnDefault("true")
         private boolean isActive = true;
 
-        public User(String username, String firstName, String lastName, String passWord){
+        public User(String username, String firstName, String lastName, String password){
                 this.username = username;
                 this.firstName = firstName;
                 this.lastName = lastName;
-                this.passWord = passWord;
+                this.password = password;
         }
 
-        public User(String username, String firstName, String lastName, String passWord, Role role){
+        public User(String username, String firstName, String lastName, String password, Role role){
                 this.username = username;
                 this.firstName = firstName;
                 this.lastName = lastName;
-                this.passWord = passWord;
+                this.password = password;
                 this.role = role;
         }
 
@@ -85,9 +86,9 @@ public class User implements UserDetails {
                 return Collections.singleton(role);
         }
 
-        @Override
+
         public String getPassword() {
-                return this.passWord;
+                return this.password;
         }
 
         public String getUsername() {
@@ -119,12 +120,8 @@ public class User implements UserDetails {
                 return this;
         }
 
-        public String getPassWord() {
-                return passWord;
-        }
-
-        public User setPassWord(String passWord) {
-                this.passWord = passWord;
+        public User setPassword(String password) {
+                this.password = password;
                 return this;
         }
 
@@ -137,4 +134,29 @@ public class User implements UserDetails {
                 return this;
         }
 
+        @Override
+        public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+                User user = (User) o;
+                return isActive == user.isActive && Objects.equals(userId, user.userId) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && role == user.role;
+        }
+
+        @Override
+        public int hashCode() {
+                return Objects.hash(userId, firstName, lastName, username, password, role, isActive);
+        }
+
+        @Override
+        public String toString() {
+                return "User{" +
+                        "userId=" + userId +
+                        ", firstName='" + firstName + '\'' +
+                        ", lastName='" + lastName + '\'' +
+                        ", username='" + username + '\'' +
+                        ", password='" + password + '\'' +
+                        ", role=" + role +
+                        ", isActive=" + isActive +
+                        '}';
+        }
 }

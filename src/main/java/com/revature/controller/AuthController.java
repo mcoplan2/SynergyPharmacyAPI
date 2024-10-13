@@ -3,8 +3,6 @@ package com.revature.controller;
 import com.revature.security.AuthenticationRequest;
 import com.revature.security.AuthenticationResponse;
 import com.revature.service.UserService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

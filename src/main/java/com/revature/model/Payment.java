@@ -27,13 +27,13 @@ public class Payment implements Serializable {
     private PayStatus payStatus;
 
     @OneToOne
-    private Request reqId;
+    private Request req;
 
     @OneToOne
-    private User userId;
+    private User user;
 
     @OneToOne
-    private Medicine medicineId;
+    private Medication med;
 
     @DateTimeFormat(pattern = "MM-dd-yyyy HH:mm:ss")
     @CreationTimestamp
@@ -49,13 +49,13 @@ public class Payment implements Serializable {
 
     public Payment(){}
 
-    public Payment(Integer paymentId, Float amount, PayStatus payStatus, Request reqId, User userId, Medicine medicineId) {
+    public Payment(Integer paymentId, Float amount, PayStatus payStatus, Request req, User user, Medication medication) {
         this.paymentId = paymentId;
         this.amount = amount;
         this.payStatus = payStatus;
-        this.reqId = reqId;
-        this.userId = userId;
-        this.medicineId = medicineId;
+        this.req = req;
+        this.user = user;
+        this.med = medication;
     }
 
     public Integer getPaymentId() {
@@ -86,29 +86,29 @@ public class Payment implements Serializable {
     }
 
     public Request getReqId() {
-        return reqId;
+        return req;
     }
 
-    public Payment setReqId(Request reqId) {
-        this.reqId = reqId;
+    public Payment setReqId(Request req) {
+        this.req = req;
         return this;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public Payment setUserId(User userId) {
-        this.userId = userId;
+    public Payment setUser(User user) {
+        this.user = user;
         return this;
     }
 
-    public Medicine getMedicineId() {
-        return medicineId;
+    public Medication getMedicationId() {
+        return med;
     }
 
-    public Payment setMedicineId(Medicine medicineId) {
-        this.medicineId = medicineId;
+    public Payment setMedicationId(Medication medication) {
+        this.med = medication;
         return this;
     }
 
@@ -135,12 +135,12 @@ public class Payment implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return Objects.equals(paymentId, payment.paymentId) && Objects.equals(amount, payment.amount) && payStatus == payment.payStatus && Objects.equals(reqId, payment.reqId) && Objects.equals(userId, payment.userId) && Objects.equals(medicineId, payment.medicineId) && Objects.equals(creationDate, payment.creationDate) && Objects.equals(updateDate, payment.updateDate);
+        return Objects.equals(paymentId, payment.paymentId) && Objects.equals(amount, payment.amount) && payStatus == payment.payStatus && Objects.equals(req, payment.req) && Objects.equals(user, payment.user) && Objects.equals(med, payment.med) && Objects.equals(creationDate, payment.creationDate) && Objects.equals(updateDate, payment.updateDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(paymentId, amount, payStatus, reqId, userId, medicineId, creationDate, updateDate);
+        return Objects.hash(paymentId, amount, payStatus, req, user, med, creationDate, updateDate);
     }
 
     @Override
@@ -149,9 +149,9 @@ public class Payment implements Serializable {
                 "paymentId=" + paymentId +
                 ", amount=" + amount +
                 ", payStatus=" + payStatus +
-                ", reqId=" + reqId +
-                ", userId=" + userId +
-                ", medicineId=" + medicineId +
+                ", req=" + req +
+                ", user=" + user +
+                ", med=" + med +
                 ", creationDate=" + creationDate +
                 ", updateDate=" + updateDate +
                 '}';

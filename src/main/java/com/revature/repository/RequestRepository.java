@@ -12,11 +12,11 @@ import java.util.Optional;
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Integer> {
     List<Request> getAllByRequestType(RequestType requestType);
-    List<Request> getAllByCreator_UserId(Integer id);
-    List<Request> getAllByRequestTypeAndCreator_UserId(RequestType requestType, Integer id);
-    Optional<Request> findByCreator_UserIdAndMed_MedIdAndDosageCountAndDosageFreqAndRequestType(Integer creatorId, Integer medId, Integer dosageCount, Integer dosageFreq, RequestType requestType);
-    List<Request> findByCreator_UserIdAndRequestTypeAndMed_NameStartingWith(Integer creatorId, RequestType requestType, String letter);
-    List<Request> findByCreator_UserIdAndRequestTypeAndMed_NameContainingIgnoreCase(Integer creatorId, RequestType requestType, String query);
+    List<Request> getAllByUser_UserId(Integer userId);
+    List<Request> getAllByRequestTypeAndUser_UserId(RequestType requestType, Integer userId);
+    Optional<Request> findByUser_UserIdAndMed_MedIdAndDosageCountAndDosageFreqAndRequestType(Integer userId, Integer medId, Integer dosageCount, Integer dosageFreq, RequestType requestType);
+    List<Request> findByUser_UserIdAndRequestTypeAndMed_NameStartingWith(Integer userId, RequestType requestType, String letter);
+    List<Request> findByUser_UserIdAndRequestTypeAndMed_NameContainingIgnoreCase(Integer userId, RequestType requestType, String query);
     List<Request> findByMed_NameStartingWith(String letter);
     List<Request> findByMed_NameContainingIgnoreCase(String query);
 }

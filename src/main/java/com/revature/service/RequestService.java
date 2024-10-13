@@ -1,7 +1,7 @@
 package com.revature.service;
 
 import com.revature.exception.ResourceCouldNotBeCreatedException;
-import com.revature.model.Medicine;
+import com.revature.model.Medication;
 import com.revature.model.Payment;
 import com.revature.model.Request;
 import com.revature.model.User;
@@ -9,7 +9,7 @@ import com.revature.model.enums.PayStatus;
 import com.revature.model.enums.RequestType;
 import com.revature.model.enums.Role;
 import com.revature.model.enums.Status;
-import com.revature.repository.MedicineRepository;
+import com.revature.repository.MedicationRepository;
 import com.revature.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,26 +22,26 @@ import java.util.Optional;
 public class RequestService {
 
     private final RequestRepository requestRepository;
-    private final MedicineRepository medicineRepository;
-    private final MedicineService medicineService;
+    private final MedicationRepository medicationRepository;
+    private final MedicationService medicationService;
     private final UserService userService;
     private final PaymentService paymentService;
 
     @Autowired
-    public RequestService(RequestRepository requestRepository, MedicineRepository medicineRepository, MedicineService medicineService, UserService userService, PaymentService paymentService) {
+    public RequestService(RequestRepository requestRepository, MedicationRepository medicationRepository, MedicationService medicationService, UserService userService, PaymentService paymentService) {
         this.requestRepository = requestRepository;
-        this.medicineRepository = medicineRepository;
-        this.medicineService = medicineService;
+        this.medicationRepository = medicationRepository;
+        this.medicationService = medicationService;
         this.userService = userService;
         this.paymentService = paymentService;
     }
 
     public Request createRequest(Request request)  {
-        Medicine medicine = medicineService.getMedicineById(request.getMed().getId());
+        Medication medication = medicationService.getMedicationById(request.getMed().getId());
 
-        if(medicine.getStatus() != Status.OUT_OF_STOCK) {
-            Optional<Request> existingRequest = requestRepository.findByCreator_UserIdAndMed_MedIdAndDosageCountAndDosageFreqAndRequestType(
-                    request.getCreator().getUserId(),
+        if(medication.getStatus() != Status.OUT_OF_STOCK) {
+            Optional<Request> existingRequest = requestRepository.findByUser_UserIdAndMed_MedIdAndDosageCountAndDosageFreqAndRequestType(
+                    request.getUser().getUserId(),
                     request.getMed().getId(),
                     request.getDosageCount(),
                     request.getDosageFreq(),
@@ -54,7 +54,7 @@ public class RequestService {
             }
             return requestRepository.save(request);
         }
-        throw new RuntimeException(medicine.getName()+" is Out of Stock");
+        throw new RuntimeException(medication.getName()+" is Out of Stock");
     }
 
     public List<Request> getAllRequests() {
@@ -84,19 +84,19 @@ public class RequestService {
     }
 
     public List<Request> getAllByRequestByUser(Integer id) {
-        return requestRepository.getAllByCreator_UserId(id);
+        return requestRepository.getAllByUser_UserId(id);
     }
 
     public List<Request> getAllRequestByUserAndType(RequestType requestType, Integer id) {
-        return requestRepository.getAllByRequestTypeAndCreator_UserId(requestType, id);
+        return requestRepository.getAllByRequestTypeAndUser_UserId(requestType, id);
     }
 
     public List<Request> getAllByUserAndTypeAndMedicationFirstLetter(Integer id, RequestType requestType, String letter) {
-        return requestRepository.findByCreator_UserIdAndRequestTypeAndMed_NameStartingWith(id, requestType, letter);
+        return requestRepository.findByUser_UserIdAndRequestTypeAndMed_NameStartingWith(id, requestType, letter);
     }
 
     public List<Request> getAllByUserAndTypeAndMedicationContaining(Integer id, RequestType requestType, String query) {
-        return requestRepository.findByCreator_UserIdAndRequestTypeAndMed_NameContainingIgnoreCase(id, requestType, query);
+        return requestRepository.findByUser_UserIdAndRequestTypeAndMed_NameContainingIgnoreCase(id, requestType, query);
     }
 
     public List<Request> getAllByMedicationNameContaining(String query) {
@@ -110,34 +110,32 @@ public class RequestService {
 
     @Transactional
     public Request approveRequest(Request request, Integer id) {
-        Medicine medicine = medicineService.getMedicineById(request.getMed().getId());
+        Medication medication = medicationService.getMedicationById(request.getMed().getId());
         User approvingUser = userService.getUserById(id);
-        // Do we need to check for Customer/Employee Role here if we are using JWTs?
+
         if(approvingUser.getRole().equals(Role.EMPLOYEE)) {
             // Check if the medication has enough in stock before approving
-            if(request.getRequestType().equals(RequestType.OPEN) && medicine.getStock() >= request.getDosageCount()) {
+            if(request.getRequestType().equals(RequestType.OPEN) && medication.getStock() >= request.getDosageCount()) {
                 //Create payment
                 Payment newPayment = new Payment();
-                newPayment.setAmount((float) (request.getDosageCount() * medicine.getPrice()));
-                newPayment.setMedicineId(medicine);
+                newPayment.setAmount((float) (request.getDosageCount() * medication.getPrice()));
+                newPayment.setMedicationId(medication);
                 newPayment.setPayStatus(PayStatus.UNPAID);
-                newPayment.setUserId(request.getCreator());
+                newPayment.setUser(request.getUser());
                 newPayment.setReqId(request);
                 Payment createdPayment = paymentService.createPayment(newPayment);
-                System.out.println("TEST: \n");
-                System.out.println(createdPayment);
 
                 // Update Stock
-                int newStock = medicine.getStock() - request.getDosageCount();
+                int newStock = medication.getStock() - request.getDosageCount();
 
                 if (newStock <= 90 && newStock > 0) {
-                    medicine.setStatus(Status.OUT_OF_STOCK);
+                    medication.setStatus(Status.OUT_OF_STOCK);
                 } else if (newStock <= 500 && newStock > 90) {
-                    medicine.setStatus(Status.RUNNING_LOW);
+                    medication.setStatus(Status.RUNNING_LOW);
                 }
 
-                medicine.setStock(newStock);
-                medicineRepository.save(medicine);
+                medication.setStock(newStock);
+                medicationRepository.save(medication);
                 // Update Request
                 request.setRequestType(RequestType.APPROVED);
                 request.setPayment(createdPayment.getPaymentId());

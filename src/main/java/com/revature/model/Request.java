@@ -1,11 +1,8 @@
 package com.revature.model;
 
 import com.revature.model.enums.RequestType;
-import com.revature.model.enums.Type;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -18,17 +15,15 @@ public class Request implements Serializable {
 
     @Column(nullable = false)
     private Integer dosageCount; // amount of pills the user will receive on their prescription.
+
     @Column(nullable = false)
-    private Integer dosageFreq; // number of
-    // times per day they need to take this pill
+    private Integer dosageFreq; // number of times per day they need to take this pill
 
     @OneToOne
-    private User creator;
+    private User user;
 
     @OneToOne
-    //@ManytoOne(cascade = CascadeType.PERSIST)
-    private Medicine med;
-
+    private Medication med;
 
     private Integer paymentId;
 
@@ -39,21 +34,21 @@ public class Request implements Serializable {
     public Request() {
     }
 
-    public Request(Integer id, Integer dosageCount, Integer dosageFreq, User user, Medicine medicine ,RequestType requestType) {
+    public Request(Integer id, Integer dosageCount, Integer dosageFreq, User user, Medication medication ,RequestType requestType) {
         this.requestId = id;
         this.dosageCount = dosageCount;
         this.dosageFreq = dosageFreq;
-        this.med = medicine;
-        this.creator = user;
+        this.med = medication;
+        this.user = user;
         this.requestType = requestType;
     }
 
-    public Request(Integer id, Integer dosageCount, Integer dosageFreq, User user, Medicine medicine ,RequestType requestType, Integer paymentId) {
+    public Request(Integer id, Integer dosageCount, Integer dosageFreq, User user, Medication medication ,RequestType requestType, Integer paymentId) {
         this.requestId = id;
         this.dosageCount = dosageCount;
         this.dosageFreq = dosageFreq;
-        this.med = medicine;
-        this.creator = user;
+        this.med = medication;
+        this.user = user;
         this.requestType = requestType;
         this.paymentId = paymentId;
     }
@@ -94,20 +89,20 @@ public class Request implements Serializable {
         return this;
     }
 
-    public User getCreator() {
-        return creator;
+    public User getUser() {
+        return user;
     }
 
-    public Request setCreator(User creator) {
-        this.creator = creator;
+    public Request setUser(User user) {
+        this.user = user;
         return this;
     }
 
-    public Medicine getMed() {
+    public Medication getMed() {
         return med;
     }
 
-    public Request setMed(Medicine med) {
+    public Request setMed(Medication med) {
         this.med = med;
         return this;
     }
@@ -119,27 +114,26 @@ public class Request implements Serializable {
         return this;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Request request = (Request) o;
-        return Objects.equals(requestId, request.requestId) && Objects.equals(dosageCount, request.dosageCount) && Objects.equals(dosageFreq, request.dosageFreq) && Objects.equals(creator, request.creator) && Objects.equals(med, request.med) && requestType == request.requestType;
+        return Objects.equals(requestId, request.requestId) && Objects.equals(dosageCount, request.dosageCount) && Objects.equals(dosageFreq, request.dosageFreq) && Objects.equals(user, request.user) && Objects.equals(med, request.med) && requestType == request.requestType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(requestId, dosageCount, dosageFreq, creator, med, requestType);
+        return Objects.hash(requestId, dosageCount, dosageFreq, user, med, requestType);
     }
 
     @Override
     public String toString() {
         return "Request{" +
-                "id=" + requestId +
+                "requestId=" + requestId +
                 ", dosageCount=" + dosageCount +
                 ", dosageFreq=" + dosageFreq +
-                ", creator=" + creator +
+                ", user=" + user +
                 ", med=" + med +
                 ", requestType=" + requestType +
                 '}';

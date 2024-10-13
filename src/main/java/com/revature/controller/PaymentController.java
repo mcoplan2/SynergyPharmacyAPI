@@ -2,12 +2,13 @@ package com.revature.controller;
 
 import com.revature.model.Payment;
 import com.revature.model.enums.PayStatus;
+import com.revature.model.enums.RequestType;
+import com.revature.model.enums.Status;
 import com.revature.service.PaymentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/payments")
@@ -59,8 +60,8 @@ public class PaymentController {
     }
 
     @GetMapping("/userid/{Id}/paystatus/{status}")
-    public List<Payment> getAllByUserId(@PathVariable("Id") String id, @PathVariable("status") String status){
-        //System.err.println("with Param = " + id + " " + status);
-        return paymentService.getAllByUserId(Integer.parseInt(id), status);
+    public List<Payment> getAllByUserIdAndStatus(@PathVariable("Id") String id, @PathVariable("status") String status){
+        PayStatus statusTypeId = PayStatus.valueOf(status.toUpperCase(Locale.ROOT));
+        return paymentService.getAllByUserIdAndStatus(Integer.parseInt(id), statusTypeId);
     }
 }

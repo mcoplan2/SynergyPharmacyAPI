@@ -4,10 +4,18 @@ import com.revature.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
+import jdk.internal.org.jline.utils.Log;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.util.Base64;
@@ -16,9 +24,10 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
+@PropertySource("application.properties")
 public class JwtUtil {
 
-
+    @Value("${jwt.secret-key}")
     private String SECRET_KEY = "eyJhbGciOiJIUzM4NCJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY1ODExMDk2OCwiaWF0IjoxNjU4MTEwOTY4fQ.apb-MphkYCm5vcegkVCPQsS95pIVk1bUOeWohXMY4CHvtx86aT4a2NioPGOZv7R8";
 
     private final String secretKeyEncoded = Base64.getEncoder().encodeToString(SECRET_KEY.getBytes());

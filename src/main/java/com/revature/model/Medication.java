@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity(name = "medications")
-public class Medicine {
+public class Medication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,11 +24,11 @@ public class Medicine {
     @Enumerated
     private Status status;
 
-    public Medicine(){
+    public Medication(){
 
     }
 
-    public Medicine(int id, String name, int stock, Double price, Type type, Status status) {
+    public Medication(int id, String name, int stock, Double price, Type type, Status status) {
         this.medId = id;
         this.name = name;
         this.stock = stock;
@@ -41,7 +41,7 @@ public class Medicine {
         return medId;
     }
 
-    public Medicine setId(int id) {
+    public Medication setId(int id) {
         this.medId = id;
         return this;
     }
@@ -50,7 +50,7 @@ public class Medicine {
         return name;
     }
 
-    public Medicine setName(String name) {
+    public Medication setName(String name) {
         this.name = name;
         return this;
     }
@@ -59,7 +59,7 @@ public class Medicine {
         return stock;
     }
 
-    public Medicine setStock(int stock) {
+    public Medication setStock(int stock) {
         this.stock = stock;
         return this;
     }
@@ -68,7 +68,7 @@ public class Medicine {
         return price;
     }
 
-    public Medicine setPrice(Double price) {
+    public Medication setPrice(Double price) {
         this.price = price;
         return this;
     }
@@ -77,7 +77,7 @@ public class Medicine {
         return type;
     }
 
-    public Medicine setType(Type type) {
+    public Medication setType(Type type) {
         this.type = type;
         return this;
     }
@@ -86,7 +86,7 @@ public class Medicine {
         return status;
     }
 
-    public Medicine setStatus(Status status) {
+    public Medication setStatus(Status status) {
         this.status = status;
         return this;
     }
@@ -95,8 +95,8 @@ public class Medicine {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Medicine medicine = (Medicine) o;
-        return medId == medicine.medId && stock == medicine.stock && Objects.equals(name, medicine.name) && Objects.equals(price, medicine.price) && type == medicine.type && status == medicine.status;
+        Medication that = (Medication) o;
+        return medId == that.medId && stock == that.stock && Objects.equals(name, that.name) && Objects.equals(price, that.price) && type == that.type && status == that.status;
     }
 
     @Override
@@ -106,8 +106,8 @@ public class Medicine {
 
     @Override
     public String toString() {
-        return "Medicine{" +
-                "id=" + medId +
+        return "Medication{" +
+                "medId=" + medId +
                 ", name='" + name + '\'' +
                 ", stock=" + stock +
                 ", price=" + price +

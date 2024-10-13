@@ -1,6 +1,5 @@
 package com.revature.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.exception.InvalidCredentialsException;
 import com.revature.exception.ResourceNotFoundException;
 import com.revature.exception.UserNotFoundException;
@@ -20,7 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.revature.security.RegistrationRequest;
 
-import javax.sql.RowSet;
 import java.util.List;
 
 @Service
@@ -30,27 +28,23 @@ public class UserService implements UserDetailsService {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final ObjectMapper objectMapper;
 
 
     public UserService(UserRepository userRepository, JwtUtil jwtUtil,
-                       PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager,
-                       ObjectMapper objectMapper) {
+                       PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
-        this.objectMapper = objectMapper;
     }
 
     public User createUser(RegistrationRequest registrationRequest){
-        //business checks
 
         User newUser = new User()
                 .setFirstName(registrationRequest.getFirstName())
                 .setLastName(registrationRequest.getLastName())
                 .setUsername(registrationRequest.getUsername())
-                .setPassWord(passwordEncoder.encode(registrationRequest.getPassword()))
+                .setPassword(passwordEncoder.encode(registrationRequest.getPassword()))
                 .setRole(Role.CUSTOMER);
 
         return userRepository.save(newUser);
@@ -69,26 +63,21 @@ public class UserService implements UserDetailsService {
     public User updateUser(User user, Integer userId){
         // check if the user exists
         User dbUser = getUserById(userId);
-        Boolean fieldUpdated = false;
+
         if(user.getUsername() != null){
             dbUser.setUsername(user.getUsername());
-            fieldUpdated = true;
         }
-        if(user.getPassWord() != null){
-            dbUser.setPassWord(passwordEncoder.encode(user.getPassWord()));
-            fieldUpdated = true;
+        if(user.getPassword() != null){
+            dbUser.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         if(user.getFirstName() != null){
             dbUser.setFirstName(user.getFirstName());
-            fieldUpdated = true;
         }
         if(user.getLastName() != null){
             dbUser.setLastName(user.getLastName());
-            fieldUpdated = true;
         }
         if(user.getRole() != null){
             dbUser.setRole(user.getRole());
-            fieldUpdated = true;
         }
 
         return userRepository.save(dbUser);

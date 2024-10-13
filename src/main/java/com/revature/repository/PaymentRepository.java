@@ -13,7 +13,9 @@ import java.util.Optional;
 public interface PaymentRepository extends JpaRepository<Payment, Integer> {
     List<Payment> getAllByPayStatus(PayStatus payStatus);
 
-    List<Payment> getAllByUserId(User userId);
+    List<Payment> getAllByUser_UserId(Integer id);
 
-    Optional<Payment> findByUserId_UserIdAndMedicineId_MedIdAndReqId_DosageCountAndReqId_DosageFreq(Integer userId, Integer medId, Integer dosageCount, Integer dosageFreq);
+    List<Payment> getAllByUser_UserIdAndPayStatus(Integer id, PayStatus payStatus);
+
+    Optional<Payment> findByUser_UserIdAndMed_MedIdAndReq_DosageCountAndReq_DosageFreq(Integer userId, Integer medId, Integer dosageCount, Integer dosageFreq);
 }
