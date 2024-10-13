@@ -1,27 +1,22 @@
 package com.revature;
 
-import com.revature.model.Medicine;
+import com.revature.model.Medication;
 import com.revature.model.Payment;
 import com.revature.model.Request;
 import com.revature.model.User;
-import com.revature.repository.MedicineRepository;
+import com.revature.model.enums.*;
 import com.revature.repository.PaymentRepository;
-import com.revature.repository.RequestRepository;
 import com.revature.repository.UserRepository;
-import com.revature.service.MedicineService;
 import com.revature.service.PaymentService;
-import com.revature.service.RequestService;
-import com.revature.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
 
 public class PaymentServiceUnitTests {
 
@@ -37,41 +32,111 @@ public class PaymentServiceUnitTests {
         paymentService = new PaymentService(paymentRepository, userRepository);
     }
 
+    User user = new User("user","fname","lname","pass", Role.CUSTOMER);
+    Medication medication = new Medication(1, "hello", 30, 2.9, Type.PILL, Status.IN_STOCK);
+    Request request = new Request(1, 2, 2, user, medication, RequestType.OPEN);
+    Payment payment = new Payment(1,200.00F, PayStatus.FULLY_PAID,request,user,medication);
+    Payment payment2 = new Payment(2,300.00F, PayStatus.FULLY_PAID,request,user,medication);
+
+
     @Test
-    public void testFindExistingPayment() {
-        // Arrange
-        User user = new User();
-        user.setUserId(1);
+    public void whenCreatePaymentIsCalledDoesNotThrowException() {
+        Mockito.when(paymentRepository.findByUser_UserIdAndMed_MedIdAndReq_DosageCountAndReq_DosageFreq(
+                payment.getUser().getUserId(),
+                payment.getMedicationId().getId(),
+                payment.getReqId().getDosageCount(),
+                payment.getReqId().getDosageFreq())).thenReturn(Optional.empty());
+        Mockito.when(paymentRepository.save(payment)).thenReturn(payment);
+        Assertions.assertDoesNotThrow(()-> paymentService.createPayment(payment));
+    }
 
-        Medicine medicine = new Medicine();
-        medicine.setId(2);
+    @Test
+    public void whenCreatePaymentIsCalledWithExistingPaymentUpdatePaymentIsCalled() {
+        Mockito.when(paymentRepository.findByUser_UserIdAndMed_MedIdAndReq_DosageCountAndReq_DosageFreq(
+                payment.getUser().getUserId(),
+                payment.getMedicationId().getId(),
+                payment.getReqId().getDosageCount(),
+                payment.getReqId().getDosageFreq())).thenReturn(Optional.ofNullable(payment));
+        Mockito.when(paymentRepository.findById(1)).thenReturn(Optional.ofNullable(payment2));
+        Payment payment1 = paymentService.createPayment(payment2);
+        Assertions.assertNotEquals(payment1, payment);
+    }
 
-        Request request = new Request();
-        request.setDosageCount(2);
-        request.setDosageFreq(3);
+    @Test
+    public void whenGetAllPaymentsIsCalledDoesNotThrowException() {
+        Assertions.assertDoesNotThrow(()-> paymentService.getAllPayment() );
+    }
 
-        Payment payment = new Payment();
-        payment.setUserId(user);
-        payment.setMedicineId(medicine);
-        payment.setReqId(request);
-        payment.setPaymentId(3);
+    @Test
+    public void whenGetAllPaymentsIsCalledReturnsListOfPayments() {
+        List<Payment> paymentList = new ArrayList<>();
+        paymentList.add(payment);
+        paymentList.add(payment2);
+        Mockito.when(paymentRepository.findAll()).thenReturn(paymentList);
+        List<Payment> returnedList = paymentService.getAllPayment();
+        Assertions.assertEquals(paymentList, returnedList);
+    }
 
-        Payment existingPayment = new Payment();
-        Mockito.when(paymentRepository.findByUserId_UserIdAndMedicineId_MedIdAndReqId_DosageCountAndReqId_DosageFreq(
-                user.getUserId(),
-                medicine.getId(),
-                request.getDosageCount(),
-                request.getDosageFreq()
-        )).thenReturn(Optional.of(existingPayment));
+    @Test
+    public void whenGetPaymentByIdIsCalledDoesNotThrowException() {
+        Mockito.when(paymentRepository.findById(1)).thenReturn(Optional.ofNullable(payment));
+        Assertions.assertDoesNotThrow(()-> paymentService.getPaymentById(1));
+    }
 
-        Mockito.when(paymentRepository.findById(payment.getPaymentId())).thenReturn(Optional.of(payment));
-        Mockito.when(paymentRepository.save(payment)).thenReturn(existingPayment);
+    @Test
+    public void whenGetPaymentByIdIsCalledReturnsPayment() {
+        Mockito.when(paymentRepository.findById(1)).thenReturn(Optional.ofNullable(payment));
+        Payment returnedPayment = paymentService.getPaymentById(1);
+        Assertions.assertEquals(payment, returnedPayment);
+    }
 
-        // Act
-        Optional<Payment> result = Optional.ofNullable(paymentService.createPayment(payment));
+    @Test
+    public void whenGetAllByPayStatusIsCalledDoesNotThrowException() {
+        Assertions.assertDoesNotThrow(()-> paymentService.getAllByPayStatus(PayStatus.FULLY_PAID));
+    }
 
-        // Assert
-        Assertions.assertEquals(existingPayment, result.get());
+    @Test
+    public void whenGetAllByPayStatusIsCalledReturnsListOfPayments() {
+        List<Payment> paymentList = new ArrayList<>();
+        paymentList.add(payment);
+        paymentList.add(payment2);
+        Mockito.when(paymentRepository.getAllByPayStatus(PayStatus.FULLY_PAID)).thenReturn(paymentList);
+        List<Payment> returnedList = paymentService.getAllByPayStatus(PayStatus.FULLY_PAID);
+        Assertions.assertEquals(paymentList, returnedList);
+    }
+
+    @Test
+    public void whenGetAllByUserIdIsCalledDoesNotThrowException() {
+        Mockito.when(userRepository.findById(1)).thenReturn(Optional.ofNullable(user));
+        Assertions.assertDoesNotThrow(()-> paymentService.getAllByUserId(1));
+    }
+
+    @Test
+    public void whenGetAllByUserIdIsCalledReturnsListOfPayments() {
+        List<Payment> paymentList = new ArrayList<>();
+        paymentList.add(payment);
+        paymentList.add(payment2);
+        Mockito.when(userRepository.findById(1)).thenReturn(Optional.ofNullable(user));
+        Mockito.when(paymentRepository.getAllByUser_UserId(user.getUserId())).thenReturn(paymentList);
+        List<Payment> returnedList = paymentService.getAllByUserId(1);
+        Assertions.assertEquals(paymentList, returnedList);
+    }
+
+    @Test
+    public void whenGetAllByUserIdAndPayStatusIsCalledDoesNotThrowException() {
+        Mockito.when(userRepository.findById(1)).thenReturn(Optional.ofNullable(user));
+        Assertions.assertDoesNotThrow(()-> paymentService.getAllByUserIdAndStatus(1, PayStatus.UNPAID));
+    }
+
+    @Test
+    public void whenGetAllByUserIdAndPayStatusIsCalledReturnsListOfPayments() {
+        List<Payment> paymentList = new ArrayList<>();
+        paymentList.add(payment);
+        paymentList.add(payment2);
+        Mockito.when(userRepository.findById(1)).thenReturn(Optional.ofNullable(user));
+        Mockito.when(paymentRepository.getAllByUser_UserIdAndPayStatus(user.getUserId(), PayStatus.FULLY_PAID)).thenReturn(paymentList);
+        List<Payment> returnedList = paymentService.getAllByUserIdAndStatus(1, PayStatus.FULLY_PAID);
+        Assertions.assertEquals(paymentList, returnedList);
     }
 
 }
