@@ -1,80 +1,76 @@
 # Synergy Pharmaceutical
 
-### Project Description:
+**Project Overview**
 
-Implements the functionality of a pharmacy where users can log in or register via API calls on a web page. After registering and authenticating, users will be able to see a list of medications available, a log of their refills, and request to purchase certain medications. Pharmacists will be able to maintain the medication database, accept or reject requests, view logs of users who purchased a specific medication, and view medication which is almost out of stock. This will be accomplished using the Spring Framework with a React frontend.
+Synergy Pharmaceutical is a Spring Boot-based backend for a full-featured pharmacy application. The application allows users to register, authenticate, and manage their medication and refill requests. Pharmacists can manage medication inventory, approve or deny customer requests, and monitor stock levels. The frontend is built with React, providing an interactive and intuitive user experience.
 
----
+## Features
 
-## User Stories
+### User Stories
+- **Account Management**: Create either a customer or pharmacist account.
+- **Medication Viewing**: Customers can view available medications in the pharmacy.
+- **Request Submission**: Users can request a refill or new prescription.
+- **Payments**: Customers can make payments for approved medications.
+- **Medication History**: Users can view a history of their refills (transaction log).
+- **Pharmacy Management**:
+  - Pharmacists can add medications to the pharmacy inventory.
+  - Pharmacists can accept or reject medication requests.
+  - Pharmacists can view transaction logs for each customer.
+  - Pharmacists can monitor stock levels and be alerted when medications are low.
 
-- [ ] Create a customer or pharmacist account.
+### Stretch Goals
+- **Insurance Payment Plans**: Add payment plans based on insurance coverage.
+- **Insurance-Based Discounts**: Users can apply insurance discounts to medication requests.
+- **Multiple Pharmacy Locations**: Support multiple pharmacies for different medication types.
+- **Stock Replenishment**: Add functionality for pharmacists to order additional medication and update stock.
+- **Quick Refill**: Enable a quick refill button for pharmacists to restock medications easily.
 
-- [ ] View available medication in the Pharmacy.
-
-- [ ] Submit a request for refill or new prescription.
-
-- [ ] Make a payment for your medication (if approved).
-
-- [ ] View your current medications in the pharmacy.
-
-- [ ] View a History/Log of your refills (transaction log).
-
-- [ ] Pharmacists can add additional medication to the pharmacy
-
-- [ ] Pharmacists can accept or reject requests.
-
-- [ ] Pharmacists can view a history/log of each customer who purchased a specific medication.
-
-- [ ] Pharmacists can view a list of Medications which are close to being out of stock (via some threshold).
-
----
-
-### Stretch goals
-
-
-- [ ] Add a way for customers to make a payment plan based on insurance.
-
-- [ ] Users can include an insurance on their request so they are able to get a discount on their medication.
-
-- [ ] Add multiple pharmacies for different types of medications.
-
-- [ ] Add a way for pharmacists to purchase additional medication ( may need to add an additional table).
-
-- [ ] Can add a refill button that just adds x amount to stock when Pharmacists need to refill medications.
-
-
----
+## Data Models
 
 ### User Model
-
-id | name(firstname/lastname) | username | password | role
+| Field     | Description           |
+|-----------|-----------------------|
+| id        | Unique identifier     |
+| name      | Full name (first/last)|
+| username  | Unique username       |
+| password  | Encrypted password    |
+| role      | User role (Customer/Pharmacist)|
 
 ### Medication Model
-
-id | name | amountinstock | priceperunit | type | status
+| Field           | Description                    |
+|-----------------|--------------------------------|
+| id              | Unique identifier              |
+| name            | Medication name                |
+| amountInStock   | Quantity available             |
+| pricePerUnit    | Price per unit                 |
+| type            | Medication type (e.g., Pill)   |
+| status          | Inventory status               |
 
 ### Request Model
-
-id | userId | medId | DosageCount | DosageFreq | Type | Status
+| Field          | Description                  |
+|----------------|------------------------------|
+| id             | Unique identifier            |
+| userId         | ID of the requesting user    |
+| medId          | ID of the medication         |
+| dosageCount    | Prescribed dosage count      |
+| dosageFreq     | Dosage frequency             |
+| type           | Request type                 |
+| status         | Request status (e.g., Approved)|
 
 ### Payment Model
+| Field     | Description                       |
+|-----------|-----------------------------------|
+| id        | Unique identifier                 |
+| userId    | ID of the user making the payment |
+| medId     | ID of the medication              |
+| reqId     | Related request ID                |
+| amount    | Payment amount                    |
+| status    | Payment status (e.g., Paid)       |
 
-id | userId | medId | reqId | Amount | Status
+## Enums
 
----
-
-### Enums
-
-
-User Role - Customer, Pharmacist
-
-Medication Status - Instock, Out of Stock, Running Low
-
-Medication Type - Pill, Liquid, Drops, Inhalers
-
-Request - Open, Approved, Denied
-
-Payment - Unpaid, Paid in Full
-
----
+- **User Role**: `Customer`, `Pharmacist`
+- **Medication Status**: `In Stock`, `Out of Stock`, `Running Low`
+- **Medication Type**: `Pill`, `Liquid`, `Drops`, `Inhaler`
+- **Request Status**: `Open`, `Approved`, `Denied`
+- **Payment Status**: `Unpaid`, `Paid in Full`
