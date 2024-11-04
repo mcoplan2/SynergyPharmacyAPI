@@ -64,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
             CorsConfiguration config = new CorsConfiguration();
             config.setAllowCredentials(true);
-            config.addAllowedOrigin("http://localhost:3000");
+            config.addAllowedOrigin("https://synergy-ui-next-js-ten.vercel.app:3000");
             config.addAllowedHeader("*");
             config.addAllowedMethod("POST");
             config.addAllowedMethod("GET");
@@ -77,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // Adjust as needed
+        configuration.setAllowedOrigins(Arrays.asList("https://synergy-ui-next-js-ten.vercel.app:3000")); // Adjust as needed
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
