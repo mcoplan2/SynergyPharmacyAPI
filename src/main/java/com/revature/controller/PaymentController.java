@@ -12,7 +12,7 @@ import java.util.Locale;
 
 @RestController
 @RequestMapping("/payments")
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
+@CrossOrigin(origins = {"http://localhost:3000", "https://synergy-ui-next-js-ten.vercel.app:3000"}, allowedHeaders = "*")
 public class PaymentController {
     private final PaymentService paymentService;
 

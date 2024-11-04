@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/authenticate")
+@CrossOrigin(origins = {"http://localhost:3000", "https://synergy-ui-next-js-ten.vercel.app:3000"} ,allowedHeaders = "*")
 public class AuthController {
 
     private final UserService userService;

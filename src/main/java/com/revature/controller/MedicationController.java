@@ -11,7 +11,7 @@ import java.util.Locale;
 
 @RestController
 @RequestMapping("/medications")
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
+@CrossOrigin(origins = {"http://localhost:3000", "https://synergy-ui-next-js-ten.vercel.app:3000"} ,allowedHeaders = "*")
 public class MedicationController {
 
     private final MedicationService medicationService;
