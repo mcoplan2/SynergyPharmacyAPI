@@ -19,11 +19,9 @@ Synergy Pharmaceutical is a Spring Boot-based backend for a full-featured pharma
   - Pharmacists can monitor stock levels and be alerted when medications are low.
 
 ### Stretch Goals
-- **Insurance Payment Plans**: Add payment plans based on insurance coverage.
 - **Insurance-Based Discounts**: Users can apply insurance discounts to medication requests.
-- **Multiple Pharmacy Locations**: Support multiple pharmacies for different medication types.
 - **Stock Replenishment**: Add functionality for pharmacists to order additional medication and update stock.
-- **Quick Refill**: Enable a quick refill button for pharmacists to restock medications easily.
+- **Support Ticket**: Add functionality to create support tickets.
 
 ## Data Models
 
