@@ -4,6 +4,8 @@
 
 Synergy Pharmaceutical is a Spring Boot-based backend for a full-featured pharmacy application. The application allows users to register, authenticate, and manage their medication and refill requests. Pharmacists can manage medication inventory, approve or deny customer requests, and monitor stock levels. The frontend is built with React, providing an interactive and intuitive user experience.
 
+Website Demo here: https://synergy-ui-next-js-ten.vercel.app/
+
 ## Features
 
 ### User Stories
