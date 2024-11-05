@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = {"http://localhost:3000", "https://synergy-ui-next-js-ten.vercel.app:3000"}, allowedHeaders = "*")
+@CrossOrigin(origins = "https://synergypharmacy.vercel.app" ,allowedHeaders = "*")
 public class UserController {
 
     private final UserService userService;

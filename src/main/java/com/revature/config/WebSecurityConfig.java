@@ -45,6 +45,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/error").permitAll()
+                .antMatchers("/authenticate").permitAll()
+                .antMatchers("/users").permitAll()
                 .antMatchers(HttpMethod.GET, "/users", "/authenticate").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/users", "/authenticate").permitAll()
                 .antMatchers(HttpMethod.POST, "/users", "/authenticate").permitAll()
@@ -64,11 +66,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
             CorsConfiguration config = new CorsConfiguration();
             config.setAllowCredentials(true);
-            config.addAllowedOrigin("https://synergy-ui-next-js-ten.vercel.app:3000");
+            config.addAllowedOrigin("https://synergypharmacy.vercel.app");
             config.addAllowedHeader("*");
             config.addAllowedMethod("POST");
             config.addAllowedMethod("GET");
             config.addAllowedMethod("PATCH");
+            config.addAllowedMethod("OPTIONS");
+            config.addAllowedMethod("PUT");
             source.registerCorsConfiguration("/**", config);
             return new CorsFilter(source);
         }
@@ -77,9 +81,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://synergy-ui-next-js-ten.vercel.app:3000")); // Adjust as needed
+        configuration.setAllowedOrigins(Arrays.asList("https://synergypharmacy.vercel.app")); // Adjust as needed
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin", "Access-Control-Allow-Origin"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
