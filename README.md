@@ -24,6 +24,7 @@ Website Demo here: https://synergypharmacy.vercel.app/
 - **Insurance-Based Discounts**: Users can apply insurance discounts to medication requests.
 - **Stock Replenishment**: Add functionality for pharmacists to order additional medication and update stock.
 - **Support Ticket**: Add functionality to create support tickets.
+- **AI Chatbot**: Add functionality to speak to an AI chatbot to check your symptoms and provide a diagnosis.
 
 ## Data Models
 
